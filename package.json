@@ -1,0 +1,49 @@
+{
+  "name": "node-iconizr",
+  "version": "0.1.0",
+  "author": "Joschi Kuphal <joschi@kuphal.net>",
+  "description": "Node module that takes a folder of SVG icons and creates a CSS icon kit out of them, including SVG & PNG sprites, suitable CSS / Sass / LESS etc. resources and a JavaScript loader for easy integration into your HTML documents",
+  "main": "lib/iconizr.js",
+  "bin": {
+    "iconizr": "./bin/iconizr.js"
+  },
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha test/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jkphl/node-iconizr.git"
+  },
+  "keywords": [
+    "icons",
+    "svg",
+    "png",
+    "sprite",
+    "css",
+    "sass",
+    "less",
+    "vector",
+    "rwd",
+    "retina"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jkphl/node-iconizr/issues"
+  },
+  "homepage": "https://github.com/jkphl/node-iconizr",
+  "dependencies": {
+    "async": "~0.2.9",
+    "svg-sprite": "~0.1.0",
+    "svg2png": ">= 1.0.1",
+    "underscore": "",
+    "pngcrush-bin": ">=0.1.7",
+    "pngquant-bin": ">=0.1.6",
+    "optipng-bin": ">=0.3.1"
+  },
+  "devDependencies": {
+    "mocha": ""
+  }
+}
