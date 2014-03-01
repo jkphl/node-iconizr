@@ -16,3 +16,5 @@ node_modules
 /.settings
 /.buildpath
 /.project
+index.js
+tmp
