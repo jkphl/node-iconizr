@@ -4,10 +4,10 @@
 }
 
 {{/common}}{{#svg}}{{#selector}}.{{expression}}{{^last}},
-{{/last}}{{/selector}} {
-	background-position: {{position}};{{^common}}
+{{/last}}{{/selector}} { {{#sprite}}
+	background-position: {{position}};{{/sprite}}{{^common}}
 	background-repeat: no-repeat;
-	background-image: url({{#sprite}}{{sprite}}{{/sprite}}{{^sprite}}{{#encode}}{{encoded}}{{/encode}}{{^encode}}{{path}}{{/encode}}{{/sprite}});{{/common}}
+	background-image: url({{#sprite}}{{sprite}}{{/sprite}}{{^sprite}}{{#encode}}"{{encoded}}"{{/encode}}{{^encode}}{{path}}{{/encode}}{{/sprite}});{{/common}}
 }{{#dims}}
 
 {{#selector}}.{{expression}}{{^last}},
