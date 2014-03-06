@@ -19,3 +19,4 @@ node_modules
 .sass-cache
 index.js
 tmp
+*.md.html
