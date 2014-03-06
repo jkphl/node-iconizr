@@ -8,12 +8,12 @@
 	background-position: {{position}};{{^common}}
 	.{{prefix}}();
 	background-image: url({{#encode}}"{{encoded}}"{{/encode}}{{^encode}}{{path}}{{/encode}});{{/common}}
-}{{#dims}}
+}{{#dims}}{{#dimensions}}
 
 {{#selector}}.{{expression}}{{^last}},
 {{/last}}{{/selector}} {
 	width: {{width}}px;
 	height: {{height}}px;
-}{{/dims}}
+}{{/dimensions}}{{/dims}}
 
 {{/svg}}

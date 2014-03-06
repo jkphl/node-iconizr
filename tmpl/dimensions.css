@@ -1,0 +1,7 @@
+{{#svg}}{{#dimensions}}{{#selector}}.{{expression}}{{^last}},
+{{/last}}{{/selector}} {
+	width: {{width}}px;
+	height: {{height}}px;
+}{{/dimensions}}
+
+{{/svg}}

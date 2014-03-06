@@ -8,12 +8,12 @@
 	background-position: {{position}};{{/sprite}}{{^common}}
 	background-repeat: no-repeat;
 	background-image: url({{#sprite}}{{sprite}}{{/sprite}}{{^sprite}}{{#encode}}"{{encoded}}"{{/encode}}{{^encode}}{{path}}{{/encode}}{{/sprite}});{{/common}}
-}{{#dims}}
+}{{#dims}}{{#dimensions}}
 
 {{#selector}}.{{expression}}{{^last}},
 {{/last}}{{/selector}} {
 	width: {{width}}px;
 	height: {{height}}px;
-}{{/dims}}
+}{{/dimensions}}{{/dims}}
 
 {{/svg}}
