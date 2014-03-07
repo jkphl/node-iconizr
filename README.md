@@ -127,6 +127,10 @@ Property      | Type             | Description
 `png`		  | Number           | This is the maximum length a PNG data URI may have. If only one icon exceeds this threshold, all data URIs of this icon set will be changed to external PNG sprite references. Defaults to `32768` (32KB = Internet Explorer 8 limit), minimum is `1024` (1kB).
 `preview`     | String           | If given and not empty, a set of preview HTML documents will be rendered that can be used for previewing and testing the icon kit. The given value will be used as directory path relative to the main output directory, whereas the main preview document will be named after your CSS file name (`{render: {css: '...'}}`) or the `prefix` option (in case no CSS files are generated).
 
+## Release History
+
+#### v0.1.0
+*	Initial release
 
 Legal
 -----
