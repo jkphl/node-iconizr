@@ -38,13 +38,15 @@
     "async": "~0.2.9",
     "svg-sprite": "~0.1.0",
     "svg2png": ">= 1.0.1",
-    "underscore": "",
+    "underscore": "1.6.0",
+    "bin-wrapper": "~0.1.9",
     "pngcrush-bin": ">=0.1.7",
     "pngquant-bin": ">=0.1.6",
     "optipng-bin": ">=0.3.1",
     "mu2": "~0.5.20",
     "uglify-js": "~2.4.12",
-    "mkdirp": "~0.3.5"
+    "mkdirp": "~0.3.5",
+    "chalk": "0.3.x"
   },
   "devDependencies": {
     "mocha": ""
