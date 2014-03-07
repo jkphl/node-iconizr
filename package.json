@@ -36,10 +36,9 @@
   "homepage": "https://github.com/jkphl/node-iconizr",
   "dependencies": {
     "async": "~0.2.9",
-    "svg-sprite": "~0.1.0",
+    "svg-sprite": "~0.2.0",
     "svg2png": ">= 1.0.1",
     "underscore": "1.6.0",
-    "bin-wrapper": "~0.1.9",
     "pngcrush-bin": ">=0.1.7",
     "pngquant-bin": ">=0.1.6",
     "optipng-bin": ">=0.3.1",
@@ -49,6 +48,8 @@
     "chalk": "0.3.x"
   },
   "devDependencies": {
-    "mocha": ""
+    "mocha": "",
+    "should": "",
+    "rimraf": ""
   }
 }
