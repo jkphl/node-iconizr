@@ -1,30 +1,26 @@
 iconizr
 =======
+<img src="http://iconizr.com/iconizr.png" alt="iconizr" align="right"/>
 > Node.js version
 
-![iconizr](http://iconizr.com/iconizr.png)
-
-is a Node.js module that reads a folder of **SVG images** and creates a **CSS icon kit** out of them, including:
+*iconizr* is a Node.js module that reads a folder of **SVG images** and creates a **CSS icon kit** out of them, including:
 
 *	cleaned versions of the original **SVG icons** (optional),
 *	a single compact **SVG icon sprite**,
 *	optimized single **PNG icons** (optional),
 *	an optimized combined **PNG icon sprite**,
-*	corresponding **CSS stylesheets** in customizable formats (plain CSS, Sass, LESS etc.),
-*	an **HTML fragment** including some JavaScript for asynchronously loading the most appropriate stylesheet flavour (depending on the client) into your HTML documents,
-*	and a couple of **HTML preview documents** (depending on the options you specified) for previewing and testing the different stylesheet flavours (optional) 
+*	corresponding **CSS stylesheets** in customizable formats (e.g. CSS, Sass, LESS etc.),
+*	an **HTML fragment** including some JavaScript for asynchronously loading the most appropriate stylesheet flavour (depending on the client)
+*	and a couple of **HTML preview documents** (depending on the options you specified) for previewing and testing the different stylesheets (optional).
 
-The stylesheets are rendered using customizable [Mustache](http://mustache.github.io) templates, so you can control which output formats are generated. For each of them, several stylesheet variants are generated:
+The stylesheets are rendered using [Mustache](http://mustache.github.io) templates, so you can control which output formats are generated (and how they are structured). For each of them, a set of several stylesheets are created, differing in the way the icons are served to clients:
 *	SVG single image icons (optional),
 *	SVG data URIs,
 *	SVG sprite references,
 *	PNG single image icons (optional),
 *	PNG data URIs and
-*	PNG sprite references,
+*	PNG sprite references.
 
-### Other versions
-
-There is also a [PHP version of iconizr](https://github.com/jkphl/iconizr), which existed before this Node.js version. I intend to keep the two versions as interchangeable as possible. Thus you will find many configuration options to be identical (or at least similar).
 
 Installation & usage
 --------------------
@@ -88,8 +84,8 @@ Iconizr.createIconKit('path/with/svg/images', 'css/output/directory', options, c
 The `createIconKit()` method will refuse to run if you don't pass exactly four arguments:
 
 1.	A path to be used as the **input directory** containing the SVG images for sprite creation. A relative path refers to the current working directory.
-2.	A main / default **output directory**, used for creating the output files (CSS / Sass / LESS etc., if activated and not specified otherwise; see the [svg-sprite rendering options](https://github.com/jkphl/svg-sprite/blob/master/README.md#rendering-configuration)) and serving as a base for the sprite subdirectory given by `spritedir` see ([svg-sprite configuration options](https://github.com/jkphl/svg-sprite#available-options)). A relative path refers to the current working directory.
-3.	An object with [configuration options](#available-options) (both [svg-sprite](https://github.com/jkphl/svg-sprite#available-options) and [iconizr specific](#available-options) ones). None of these options is mandatory, so you may pass an empty object `{}` here.
+2.	A main / default **output directory**, used for creating the stylesheet resources (CSS / Sass / LESS etc. if activated and not specified otherwise; see the [svg-sprite rendering options](https://github.com/jkphl/svg-sprite/blob/master/README.md#rendering-configuration)) and serving as a base for the sprite subdirectory given by `spritedir` see ([svg-sprite configuration options](https://github.com/jkphl/svg-sprite#available-options)). A relative path refers to the current working directory.
+3.	An object with [configuration options](#available-options) (for both [svg-sprite](https://github.com/jkphl/svg-sprite#available-options) and [iconizr specific](#available-options)). None of these options is mandatory, so you may pass an empty object `{}` here.
 4.	A callback to be run when the sprite creation has finished (with or without error).
 
 Configuration
@@ -97,26 +93,28 @@ Configuration
 
 ### Options inferred from svg-sprite
 
-*iconizr* is built on top of [svg-sprite](https://github.com/jkphl/svg-sprite), which is a Node.js module for SVG sprite generation. All of [svg-sprite's configuration options](https://github.com/jkphl/svg-sprite#available-options) apply for *iconizr* as well, namely
+*iconizr* is built on top of [svg-sprite](https://github.com/jkphl/svg-sprite), which is a Node.js module for SVG sprite generation. All of [svg-sprite's configuration options](https://github.com/jkphl/svg-sprite#available-options) apply for *iconizr* as well. For a complete reference please see the [svg-sprite documentation](https://github.com/jkphl/svg-sprite).
 
-*	render
-*	spritedir
-*	sprite
-*	prefix
-*	common
-*	maxwidth
-*	maxheight
-*	padding
-*	pseudo
-*	dims
-*	keep
-*	verbose
-*	cleanwith
-*	cleanconfig
+|Option       |Description  |
+|:------------|:------------|
+|render       |Default output directory for stylesheets and the sprite subdirectory|
+|spritedir    |Sprite subdirectory name [`"svg"`]|
+|sprite       |Sprite file name [`"sprite"`]|
+|prefix       |CSS selector prefix [`"svg"`]|
+|common       |Common CSS selector for all images [*empty*]|
+|maxwidth     |Maximum single image width [`1000`]|
+|maxheight    |Maximum single image height [`1000`]|
+|padding      |Transparent padding around the single images (in pixel) [`0`]|
+|pseudo       |Character sequence for denoting CSS pseudo classes [`"~"`]|
+|dims         |Render image dimensions as separate CSS rules [`false`]|
+|keep         |Keep intermediate SVG files (inside the sprite subdirectory) [`false`]|
+|verbose      | Output verbose progress information (0-3) [`0`]|
+|cleanwith    |Module to be used for SVG cleaning. Currently "scour" or "svgo" [`"svgo"`]|
+|cleanconfig  |Configuration options for the cleaning module [`{}`]|
 
 In particular, *iconizr*'s [rendering configuration](https://github.com/jkphl/svg-sprite/blob/master/README.md#rendering-configuration) and [output format behaviour](https://github.com/jkphl/svg-sprite/blob/master/README.md#custom-output-formats) is identical to *svg-sprite*, so please have a look there for further reference.
 
-### iconizr specific options
+### Options for iconizr
 
 Property      | Type             | Description     
 ------------- | ---------------- | ----------------
@@ -127,7 +125,19 @@ Property      | Type             | Description
 `png`		  | Number           | This is the maximum length a PNG data URI may have. If only one icon exceeds this threshold, all data URIs of this icon set will be changed to external PNG sprite references. Defaults to `32768` (32KB = Internet Explorer 8 limit), minimum is `1024` (1kB).
 `preview`     | String           | If given and not empty, a set of preview HTML documents will be rendered that can be used for previewing and testing the icon kit. The given value will be used as directory path relative to the main output directory, whereas the main preview document will be named after your CSS file name (`{render: {css: '...'}}`) or the `prefix` option (in case no CSS files are generated).
 
-## Release History
+
+Other versions
+--------------
+Besides this Node.js module there are several different versions of *iconizr*:
+
+*	A [Grunt plugin](https://github.com/jkphl/grunt-iconizr) wrapping around this module.
+*	A [PHP command line](https://github.com/jkphl/iconizr) version (that in fact is the "original" one, but compared to the Node.js / Grunt branch it's a little outdated at the moment ...).
+*	The **online service** at [iconizr.com](http://iconizr.com) that's based on the aforementioned PHP version (you can use it for creating CSS icon kits without the need of a local installation).
+*	Finally, [Haithem Bel Haj](https://github.com/haithembelhaj) published a [Grunt plugin](https://github.com/haithembelhaj/grunt-iconizr-php) that's also based on the PHP version. I never tried this one myself, though.
+
+
+Release History
+---------------
 
 #### v0.1.0
 *	Initial release
@@ -136,6 +146,6 @@ Legal
 -----
 Copyright © 2014 Joschi Kuphal <joschi@kuphal.net> / [@jkphl](https://twitter.com/jkphl)
 
-*svg-sprite* is licensed under the terms of the [MIT license](LICENSE.txt).
+*iconizr* is licensed under the terms of the [MIT license](LICENSE.txt).
 
 The contained example SVG icons are part of the [Tango Icon Library](http://tango.freedesktop.org/Tango_Icon_Library) and belong to the Public Domain.

@@ -2,11 +2,8 @@
   "name": "iconizr",
   "version": "0.1.0",
   "author": "Joschi Kuphal <joschi@kuphal.net>",
-  "description": "Node module that takes a folder of SVG icons and creates a CSS icon kit out of them, including SVG & PNG sprites, suitable CSS / Sass / LESS etc. resources and a JavaScript loader for easy integration into your HTML documents",
+  "description": "Takes a folder of SVG icons and creates a CSS icon kit out of them, including SVG & PNG sprites, suitable CSS / Sass / LESS etc. resources and a JavaScript loader for easy integration into your HTML documents",
   "main": "lib/iconizr.js",
-  "bin": {
-    "iconizr": "./bin/iconizr.js"
-  },
   "directories": {
     "test": "test"
   },
@@ -30,7 +27,12 @@
     "rwd",
     "retina"
   ],
-  "license": "MIT",
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/jkphl/node-iconizr/blob/master/LICENSE.txt"
+    }
+  ],
   "bugs": {
     "url": "https://github.com/jkphl/node-iconizr/issues"
   },
@@ -38,11 +40,11 @@
   "dependencies": {
     "async": "~0.2.9",
     "svg-sprite": "~0.2.0",
-    "svg2png": ">= 1.0.1",
+    "svg2png": "~1.0.1",
     "underscore": "1.6.0",
-    "pngcrush-bin": ">=0.1.7",
-    "pngquant-bin": ">=0.1.6",
-    "optipng-bin": ">=0.3.1",
+    "pngcrush-bin": "~0.1.7",
+    "pngquant-bin": "~0.1.6",
+    "optipng-bin": "~0.3.1",
     "mu2": "~0.5.20",
     "uglify-js": "~2.4.12",
     "mkdirp": "~0.3.5",
