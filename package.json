@@ -1,8 +1,26 @@
 {
   "name": "iconizr",
   "version": "0.1.0",
-  "author": "Joschi Kuphal <joschi@kuphal.net>",
-  "description": "Takes a folder of SVG icons and creates a CSS icon kit out of them, including SVG & PNG sprites, suitable CSS / Sass / LESS etc. resources and a JavaScript loader for easy integration into your HTML documents",
+  "author": {
+    "name": "Joschi Kuphal",
+    "email": "joschi@kuphal.net",
+    "url": "http://jkphl.is"
+  },
+  "description": "Takes a folder of SVG images and creates a CSS icon kit out of them, serving the icons as SVG / PNG sprite or embedded data URI (depending on the client's capabilities), along with suitable CSS / Sass / LESS etc. resources and a JavaScript loader for easy integration into your HTML documents",
+  "homepage": "https://github.com/jkphl/node-iconizr",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jkphl/node-iconizr.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jkphl/node-iconizr/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/jkphl/node-iconizr/blob/master/LICENSE.txt"
+    }
+  ],
   "main": "lib/iconizr.js",
   "directories": {
     "test": "test"
@@ -10,33 +28,6 @@
   "scripts": {
     "test": "mocha test/*.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/jkphl/node-iconizr.git"
-  },
-  "keywords": [
-    "icon",
-    "icons",
-    "svg",
-    "png",
-    "sprite",
-    "css",
-    "sass",
-    "less",
-    "vector",
-    "rwd",
-    "retina"
-  ],
-  "licenses": [
-    {
-      "type": "MIT",
-      "url": "https://github.com/jkphl/node-iconizr/blob/master/LICENSE.txt"
-    }
-  ],
-  "bugs": {
-    "url": "https://github.com/jkphl/node-iconizr/issues"
-  },
-  "homepage": "https://github.com/jkphl/node-iconizr",
   "dependencies": {
     "async": "~0.2.9",
     "svg-sprite": "~0.2.0",
@@ -54,5 +45,18 @@
     "mocha": "",
     "should": "",
     "rimraf": ""
-  }
+  },
+  "keywords": [
+    "icon",
+    "icons",
+    "svg",
+    "png",
+    "sprite",
+    "css",
+    "sass",
+    "less",
+    "vector",
+    "rwd",
+    "retina"
+  ]
 }
