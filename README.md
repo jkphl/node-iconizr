@@ -97,7 +97,7 @@ Configuration
 
 |Option       |Description  |
 |:------------|:------------|
-|render       |Default output directory for stylesheets and the sprite subdirectory|
+|render       |Rendering configuration (output formats like CSS, Sass, LESS, HTML with inline SVG, etc.)|
 |spritedir    |Sprite subdirectory name [`"svg"`]|
 |sprite       |Sprite file name [`"sprite"`]|
 |prefix       |CSS selector prefix [`"svg"`]|
@@ -126,6 +126,12 @@ Property      | Type             | Description
 `svg`         | Number           | This is the maximum length a SVG data URI may have. If only one icon exceeds this threshold, all data URIs of this icon set will be changed to external SVG sprite references. Defaults to `1048576` (1MB), minimum is `1024` (1kB).
 `png`		  | Number           | This is the maximum length a PNG data URI may have. If only one icon exceeds this threshold, all data URIs of this icon set will be changed to external PNG sprite references. Defaults to `32768` (32KB = Internet Explorer 8 limit), minimum is `1024` (1kB).
 `preview`     | String           | If given and not empty, a set of preview HTML documents will be rendered that can be used for previewing and testing the icon kit. The given value will be used as directory path relative to the main output directory, whereas the main preview document will be named after your CSS file name (`{render: {css: '...'}}`) or the `prefix` option (in case no CSS files are generated).
+
+### Custom output formats & inline SVG embedding
+
+The output rendering of *iconizr* is based on [Mustache](http://mustache.github.io) templates, which enables **full customization of the generated results**. You can even introduce completely new output formats. For details please see the [svg-sprite documentation](https://github.com/jkphl/svg-sprite#custom-output-formats).
+
+Also, you may use *iconizr* to create an **inline SVG sprite** that can be embedded directly into your HTML documents. Please see the [svg-sprite documentation](https://github.com/jkphl/svg-sprite#inline-embedding) for details.
 
 
 Other versions
