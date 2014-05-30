@@ -1,13 +1,13 @@
 {{#common}}.{{prefix}} {
 	background-repeat: no-repeat;
-	background-image: url({{sprite}});
+	background-image: url({{{sprite}}});
 }
 
 {{/common}}{{#svg}}{{#selector}}.{{expression}}{{^last}},
 {{/last}}{{/selector}} { {{#sprite}}
 	background-position: {{position}};{{/sprite}}{{^common}}
 	background-repeat: no-repeat;
-	background-image: url({{#sprite}}{{sprite}}{{/sprite}}{{^sprite}}{{#encode}}"{{encoded}}"{{/encode}}{{^encode}}{{path}}{{/encode}}{{/sprite}});{{/common}}
+	background-image: url({{#sprite}}{{{sprite}}}{{/sprite}}{{^sprite}}{{#encode}}"{{{encoded}}}"{{/encode}}{{^encode}}{{{path}}}{{/encode}}{{/sprite}});{{/common}}
 }{{#dims}}{{#dimensions}}
 
 {{#selector}}.{{expression}}{{^last}},

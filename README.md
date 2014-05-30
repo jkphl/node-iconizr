@@ -105,9 +105,11 @@ Configuration
 |maxwidth     |Maximum single image width [`1000`]|
 |maxheight    |Maximum single image height [`1000`]|
 |padding      |Transparent padding around the single images (in pixel) [`0`]|
+|layout       |Image arrangement within the sprite (`"vertical"`, `"horizontal"` or `"diagonal"`) [`"vertical"`]|
 |pseudo       |Character sequence for denoting CSS pseudo classes [`"~"`]|
 |dims         |Render image dimensions as separate CSS rules [`false`]|
 |keep         |Keep intermediate SVG files (inside the sprite subdirectory) [`false`]|
+|recursive    |Recursive scan of the input directory for SVG files [`false`]|
 |verbose      | Output verbose progress information (0-3) [`0`]|
 |cleanwith    |Module to be used for SVG cleaning. Currently "scour" or "svgo" [`"svgo"`]|
 |cleanconfig  |Configuration options for the cleaning module [`{}`]|
@@ -138,6 +140,15 @@ Besides this Node.js module there are several different versions of *iconizr*:
 
 Release History
 ---------------
+
+#### v0.2.0
+*	Switched to mustache.js for extended function support
+*	Fixed full disabling of output rendering ([#2](https://github.com/jkphl/node-iconizr/issues/2))
+*	Don't crash with empty input directory ([#3](https://github.com/jkphl/node-iconizr/issues/3))
+*	Fixed bug with the SVG sprite not used by the Sass & LESS output types ([grunt-iconizr issue #6](https://github.com/jkphl/grunt-iconizr/issues/6))
+*	Added new HTML output format for rendering an inline SVG HTML implementation ([#1](https://github.com/jkphl/node-iconizr/issues/1))
+*	Added new SVG output format for rendering an inline SVG sprite ([#1](https://github.com/jkphl/node-iconizr/issues/1))
+*	Documentation corrections
 
 #### v0.1.0
 *	Initial release

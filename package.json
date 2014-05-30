@@ -1,12 +1,12 @@
 {
   "name": "iconizr",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "author": {
     "name": "Joschi Kuphal",
     "email": "joschi@kuphal.net",
     "url": "http://jkphl.is"
   },
-  "description": "Takes a folder of SVG images and creates a CSS icon kit out of them, serving the icons as SVG / PNG sprite or embedded data URI (depending on the client's capabilities), along with suitable CSS / Sass / LESS etc. resources and a JavaScript loader for easy integration into your HTML documents",
+  "description": "Takes a folder of SVG images and creates a CSS icon kit out of them, serving the icons as SVG / PNG sprite or embedded data URIs (depending on the client's capabilities), along with suitable CSS / Sass / LESS etc. resources and a JavaScript loader for easy integration into your HTML documents",
   "homepage": "https://github.com/jkphl/node-iconizr",
   "repository": {
     "type": "git",
@@ -30,14 +30,14 @@
   },
   "dependencies": {
     "async": "~0.2.9",
-    "svg-sprite": "~0.2.0",
+    "svg-sprite": "~0.3.1",
     "svg2png": "~1.0.1",
     "underscore": "1.6.0",
     "pngcrush-bin": "~0.1.7",
     "pngquant-bin": "~0.1.6",
     "optipng-bin": "~0.3.1",
-    "mu2": "~0.5.20",
     "uglify-js": "~2.4.12",
+    "mustache": "~0.8.1",
     "mkdirp": "~0.3.5",
     "chalk": "0.3.x"
   },
