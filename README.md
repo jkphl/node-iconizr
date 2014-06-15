@@ -147,6 +147,9 @@ Besides this Node.js module there are several different versions of *iconizr*:
 Release History
 ---------------
 
+#### v0.2.1
+*	Fixed invalid `background-position` style in Sass / LESS templates ([#4](https://github.com/jkphl/node-iconizr/issues/4)) 
+
 #### v0.2.0
 *	Switched to mustache.js for extended function support
 *	Fixed full disabling of output rendering ([#2](https://github.com/jkphl/node-iconizr/issues/2))
