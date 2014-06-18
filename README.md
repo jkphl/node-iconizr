@@ -9,7 +9,7 @@ iconizr
 *	a single compact **SVG icon sprite**,
 *	optimized single **PNG icons** (optional),
 *	an optimized combined **PNG icon sprite**,
-*	corresponding **CSS stylesheets** in customizable formats (e.g. CSS, Sass, LESS etc.),
+*	corresponding **CSS stylesheets** in customizable formats (e.g. CSS, Sass, LESS, Stylus etc.),
 *	an **HTML fragment** including some JavaScript for asynchronously loading the most appropriate stylesheet flavour (depending on the client)
 *	and a couple of **HTML preview documents** (depending on the options you specified) for previewing and testing the different stylesheets (optional).
 
@@ -84,7 +84,7 @@ Iconizr.createIconKit('path/with/svg/images', 'css/output/directory', options, c
 The `createIconKit()` method will refuse to run if you don't pass exactly four arguments:
 
 1.	A path to be used as the **input directory** containing the SVG images for sprite creation. A relative path refers to the current working directory.
-2.	A main / default **output directory**, used for creating the stylesheet resources (CSS / Sass / LESS etc. if activated and not specified otherwise; see the [svg-sprite rendering options](https://github.com/jkphl/svg-sprite/blob/master/README.md#rendering-configuration)) and serving as a base for the sprite subdirectory given by `spritedir` see ([svg-sprite configuration options](https://github.com/jkphl/svg-sprite#available-options)). A relative path refers to the current working directory.
+2.	A main / default **output directory**, used for creating the stylesheet resources (CSS / Sass / LESS / Stylus etc. if activated and not specified otherwise; see the [svg-sprite rendering options](https://github.com/jkphl/svg-sprite/blob/master/README.md#rendering-configuration)) and serving as a base for the sprite subdirectory given by `spritedir` see ([svg-sprite configuration options](https://github.com/jkphl/svg-sprite#available-options)). A relative path refers to the current working directory.
 3.	An object with [configuration options](#available-options) (for both [svg-sprite](https://github.com/jkphl/svg-sprite#available-options) and [iconizr specific](#available-options)). None of these options is mandatory, so you may pass an empty object `{}` here.
 4.	A callback to be run when the sprite creation has finished (with or without error).
 
@@ -97,7 +97,7 @@ Configuration
 
 |Option       |Description  |
 |:------------|:------------|
-|render       |Rendering configuration (output formats like CSS, Sass, LESS, HTML with inline SVG, etc.)|
+|render       |Rendering configuration (output formats like CSS, Sass, LESS, Stylus, HTML with inline SVG, etc.)|
 |spritedir    |Sprite subdirectory name [`"svg"`]|
 |sprite       |Sprite file name [`"sprite"`]|
 |prefix       |CSS selector prefix [`"svg"`]|
@@ -147,6 +147,9 @@ Besides this Node.js module there are several different versions of *iconizr*:
 Release History
 ---------------
 
+#### v0.2.2
+*	Added a Stylus output template ([#5](https://github.com/jkphl/node-iconizr/pull/5))
+
 #### v0.2.1
 *	Fixed invalid `background-position` style in Sass / LESS templates ([#4](https://github.com/jkphl/node-iconizr/issues/4)) 
 
@@ -161,6 +164,12 @@ Release History
 
 #### v0.1.0
 *	Initial release
+
+
+Contributors
+------------
+*	[Ralf Hortt](https://github.com/Horttcore)
+
 
 Legal
 -----
