@@ -64,13 +64,13 @@ describe('iconizr', function() {
     });
     
     describe('with valid, extended arguments', function() {
-        it('generates 51 files', function(done) {
+        it('generates 57 files', function(done) {
         	this.timeout(10000);
-        	Iconizr.createIconKit(path.join(__dirname, 'files'), path.normalize(path.join(__dirname, '..', 'tmp', 'css')), {preview: 'preview', keep: true, render: {scss: '../sass/_icons', less: '../less/_icons'}, level: 0}, function(err, result){
+        	Iconizr.createIconKit(path.join(__dirname, 'files'), path.normalize(path.join(__dirname, '..', 'tmp', 'css')), {preview: 'preview', keep: true, render: {scss: '../sass/_icons', less: '../less/_icons', styl: '../styl/_icons'}, level: 0}, function(err, result){
             	should(err).not.ok;
             	should(result).be.an.Object;
 				should(result).property('success', true);
-				should(result).property('length', 51);
+				should(result).property('length', 57);
 				done();
             });
         });
