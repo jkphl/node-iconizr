@@ -98,6 +98,7 @@ Configuration
 |Option       |Description  |
 |:------------|:------------|
 |render       |Rendering configuration (output formats like CSS, Sass, LESS, Stylus, HTML with inline SVG, etc.)|
+|variables    |Custom Mustache rendering variables|
 |spritedir    |Sprite subdirectory name [`"svg"`]|
 |sprite       |Sprite file name [`"sprite"`]|
 |prefix       |CSS selector prefix [`"svg"`]|
@@ -149,6 +150,7 @@ Release History
 
 #### v0.2.2
 *	Added a Stylus output template ([#5](https://github.com/jkphl/node-iconizr/pull/5))
+*	Added the `variables` config option ([*grunt-iconizr* #13](https://github.com/jkphl/grunt-iconizr/issues/13))
 
 #### v0.2.1
 *	Fixed invalid `background-position` style in Sass / LESS templates ([#4](https://github.com/jkphl/node-iconizr/issues/4)) 
