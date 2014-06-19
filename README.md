@@ -98,7 +98,7 @@ Configuration
 |Option       |Description  |
 |:------------|:------------|
 |render       |Rendering configuration (output formats like CSS, Sass, LESS, Stylus, HTML with inline SVG, etc.)|
-|variables    |Custom Mustache rendering variables|
+|variables    |Custom Mustache rendering variables [`{}`]|
 |spritedir    |Sprite subdirectory name [`"svg"`]|
 |sprite       |Sprite file name [`"sprite"`]|
 |prefix       |CSS selector prefix [`"svg"`]|
