@@ -127,6 +127,7 @@ Property      | Type             | Description
 `svg`         | Number           | This is the maximum length a SVG data URI may have. If only one icon exceeds this threshold, all data URIs of this icon set will be changed to external SVG sprite references. Defaults to `1048576` (1MB), minimum is `1024` (1kB).
 `png`		  | Number           | This is the maximum length a PNG data URI may have. If only one icon exceeds this threshold, all data URIs of this icon set will be changed to external PNG sprite references. Defaults to `32768` (32KB = Internet Explorer 8 limit), minimum is `1024` (1kB).
 `preview`     | String           | If given and not empty, a set of preview HTML documents will be rendered that can be used for previewing and testing the icon kit. The given value will be used as directory path relative to the main output directory, whereas the main preview document will be named after your CSS file name (`{render: {css: '...'}}`) or the `prefix` option (in case no CSS files are generated).
+`loader`      | Object           | With this option you get some control about the format and destination of the JavaScript loader fragment: `loader.type` may be `"html"` (for an HTML loader fragment; this is the default) or `"js"` (for a JavaScript file only). The Boolean `loader.minify` controls whether the loader script will get uglyfied (defaults to `TRUE`). Finally, `loader.dest` is the path (relative to the main output directory) where the loader resource will be written to (defaulting to `"."`).  
 
 ### Custom output formats & inline SVG embedding
 
@@ -151,6 +152,7 @@ Release History
 #### v0.2.3
 *	Added concurrent task limit ([#11](https://github.com/jkphl/node-iconizr/pull/11))
 *	Updated dependencies ([#9](https://github.com/jkphl/node-iconizr/issues/9))
+*	Added support for JS-only loader fragment ([#10](https://github.com/jkphl/node-iconizr/issues/10))
 
 #### v0.2.2
 *	Added a Stylus output template ([#5](https://github.com/jkphl/node-iconizr/pull/5))
