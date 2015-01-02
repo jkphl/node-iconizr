@@ -148,6 +148,10 @@ Besides this Node.js module there are several different versions of *iconizr*:
 Release History
 ---------------
 
+#### v0.2.3
+*	Added concurrent task limit ([#11](https://github.com/jkphl/node-iconizr/pull/11))
+*	Updated dependencies ([#9](https://github.com/jkphl/node-iconizr/issues/9))
+
 #### v0.2.2
 *	Added a Stylus output template ([#5](https://github.com/jkphl/node-iconizr/pull/5))
 *	Added the `variables` config option ([*grunt-iconizr* #13](https://github.com/jkphl/grunt-iconizr/issues/13))
