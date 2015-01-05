@@ -1,3 +1,7 @@
+ATTENTION: Not yet based on the latest [svg-sprite](https://github.com/jkphl/svg-sprite) generation!
+====================================================================================================
+This version of *node-iconizr* is still **based on an outdated version of _svg-sprite_**. Links to the *svg-sprite* manual have been adapted. An updated version of *node-iconizr* will be available soon, supporting all the [shiny new features](https://github.com/jkphl/svg-sprite). Thanks for your patience! <3
+
 iconizr
 =======
 <img src="http://iconizr.com/iconizr.png" alt="iconizr" align="right"/>
@@ -84,8 +88,8 @@ Iconizr.createIconKit('path/with/svg/images', 'css/output/directory', options, c
 The `createIconKit()` method will refuse to run if you don't pass exactly four arguments:
 
 1.	A path to be used as the **input directory** containing the SVG images for sprite creation. A relative path refers to the current working directory.
-2.	A main / default **output directory**, used for creating the stylesheet resources (CSS / Sass / LESS / Stylus etc. if activated and not specified otherwise; see the [svg-sprite rendering options](https://github.com/jkphl/svg-sprite/blob/master/README.md#rendering-configuration)) and serving as a base for the sprite subdirectory given by `spritedir` see ([svg-sprite configuration options](https://github.com/jkphl/svg-sprite#available-options)). A relative path refers to the current working directory.
-3.	An object with [configuration options](#available-options) (for both [svg-sprite](https://github.com/jkphl/svg-sprite#available-options) and [iconizr specific](#available-options)). None of these options is mandatory, so you may pass an empty object `{}` here.
+2.	A main / default **output directory**, used for creating the stylesheet resources (CSS / Sass / LESS / Stylus etc. if activated and not specified otherwise; see the [svg-sprite rendering options](https://github.com/jkphl/svg-sprite/tree/bbd051e940e7b6373ed56277251a8affb03b1c10#rendering-configuration)) and serving as a base for the sprite subdirectory given by `spritedir` see ([svg-sprite configuration options](https://github.com/jkphl/svg-sprite/tree/bbd051e940e7b6373ed56277251a8affb03b1c10#available-options)). A relative path refers to the current working directory.
+3.	An object with [configuration options](#available-options) (for both [svg-sprite](https://github.com/jkphl/svg-sprite/tree/bbd051e940e7b6373ed56277251a8affb03b1c10#available-options) and [iconizr specific](#available-options)). None of these options is mandatory, so you may pass an empty object `{}` here.
 4.	A callback to be run when the sprite creation has finished (with or without error).
 
 Configuration
@@ -93,7 +97,7 @@ Configuration
 
 ### Options inferred from svg-sprite
 
-*iconizr* is built on top of [svg-sprite](https://github.com/jkphl/svg-sprite), which is a Node.js module for SVG sprite generation. All of [svg-sprite's configuration options](https://github.com/jkphl/svg-sprite#available-options) apply for *iconizr* as well. For a complete reference please see the [svg-sprite documentation](https://github.com/jkphl/svg-sprite).
+*iconizr* is built on top of [svg-sprite](https://github.com/jkphl/svg-sprite/tree/bbd051e940e7b6373ed56277251a8affb03b1c10), which is a Node.js module for SVG sprite generation. All of [svg-sprite's configuration options](https://github.com/jkphl/svg-sprite/tree/bbd051e940e7b6373ed56277251a8affb03b1c10#available-options) apply for *iconizr* as well. For a complete reference please see the [svg-sprite documentation](https://github.com/jkphl/svg-sprite/tree/bbd051e940e7b6373ed56277251a8affb03b1c10).
 
 |Option       |Description  |
 |:------------|:------------|
@@ -115,7 +119,7 @@ Configuration
 |cleanwith    |Module to be used for SVG cleaning. Currently "scour" or "svgo" [`"svgo"`]|
 |cleanconfig  |Configuration options for the cleaning module [`{}`]|
 
-In particular, *iconizr*'s [rendering configuration](https://github.com/jkphl/svg-sprite/blob/master/README.md#rendering-configuration) and [output format behaviour](https://github.com/jkphl/svg-sprite/blob/master/README.md#custom-output-formats) is identical to *svg-sprite*, so please have a look there for further reference.
+In particular, *iconizr*'s [rendering configuration](https://github.com/jkphl/svg-sprite/tree/bbd051e940e7b6373ed56277251a8affb03b1c10#rendering-configuration) and [output format behaviour](https://github.com/jkphl/svg-sprite/tree/bbd051e940e7b6373ed56277251a8affb03b1c10#custom-output-formats) is identical to *svg-sprite*, so please have a look there for further reference.
 
 ### Options for iconizr
 
@@ -131,9 +135,9 @@ Property      | Type             | Description
 
 ### Custom output formats & inline SVG embedding
 
-The output rendering of *iconizr* is based on [Mustache](http://mustache.github.io) templates, which enables **full customization of the generated results**. You can even introduce completely new output formats. For details please see the [svg-sprite documentation](https://github.com/jkphl/svg-sprite#custom-output-formats).
+The output rendering of *iconizr* is based on [Mustache](http://mustache.github.io) templates, which enables **full customization of the generated results**. You can even introduce completely new output formats. For details please see the [svg-sprite documentation](https://github.com/jkphl/svg-sprite/tree/bbd051e940e7b6373ed56277251a8affb03b1c10#custom-output-formats).
 
-Also, you may use *iconizr* to create an **inline SVG sprite** that can be embedded directly into your HTML documents. Please see the [svg-sprite documentation](https://github.com/jkphl/svg-sprite#inline-embedding) for details.
+Also, you may use *iconizr* to create an **inline SVG sprite** that can be embedded directly into your HTML documents. Please see the [svg-sprite documentation](https://github.com/jkphl/svg-sprite/tree/bbd051e940e7b6373ed56277251a8affb03b1c10#inline-embedding) for details.
 
 
 Other versions
