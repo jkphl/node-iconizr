@@ -1,0 +1,9 @@
+graph TD;
+    A[JavaScript?]-->|Yes|B((SVG?))
+    A-->|No|C[CSS + PNG sprite]
+    B-->|Yes|D((dataURI?))
+    B-->|No|E((dataURI?))
+    D-->|Yes|F[CSS + SVG dataURI]
+    D-->|No|G[CSS + SVG sprite]
+    E-->|Yes|H[CSS + PNG dataURI]
+    E-->|Yes|C
