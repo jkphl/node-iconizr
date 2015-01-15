@@ -1,19 +1,21 @@
-.{{prefix}}{{^common}}(){{/common}} {
-  background-repeat: no-repeat;{{#common}}
-	background-image: url({{{sprite}}});{{/common}}
+{{#sprite}}.{{mixin}}{{^common}}(){{/common}} {
+	background-repeat: no-repeat;
+	background-image: url({{{sprite}}});
 }
 
-{{#svg}}{{#selector}}.{{expression}}{{^last}},
-{{/last}}{{/selector}} { {{#sprite}}
-	background-position: {{position}};{{/sprite}}{{^common}}
-	.{{prefix}}();
-	background-image: url({{#sprite}}{{{sprite}}}{{/sprite}}{{^sprite}}{{#encode}}"{{{encoded}}}"{{/encode}}{{^encode}}{{{path}}}{{/encode}}{{/sprite}});{{/common}}
-}{{#dims}}{{#dimensions}}
+{{/sprite}}{{#shapes}}{{#selector.shape}}{{expression}}{{^last}},
+{{/last}}{{/selector.shape}} { {{#sprite}}
+	background-position: {{position.relative.xy}};{{^common}}
+	.{{mixin}}();{{/common}}{{/sprite}}{{^sprite}}
+	background-image: url({{{icon}}});{{/sprite}}{{#dimensions.inline}}
+	width: {{width.outer}}px;
+	height: {{height.outer}}px;{{/dimensions.inline}}
+}{{#dimensions.extra}}
 
-{{#selector}}.{{expression}}{{^last}},
-{{/last}}{{/selector}} {
-	width: {{width}}px;
-	height: {{height}}px;
-}{{/dimensions}}{{/dims}}
+{{#selector.dimensions}}{{expression}}{{^last}},
+{{/last}}{{/selector.dimensions}} {
+	width: {{width.outer}}px;
+	height: {{height.outer}}px;
+}{{/dimensions.extra}}
 
-{{/svg}}
+{{/shapes}}

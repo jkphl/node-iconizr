@@ -1,16 +1,17 @@
-{{#common}}.{{/common}}{{^common}}${{/common}}{{prefix}} 
-	background-repeat no-repeat{{#common}}
-	background-image url({{{sprite}}}){{/common}}
+{{#sprite}}{{#common}}.{{/common}}{{^common}}${{/common}}{{mixin}} 
+	background-repeat no-repeat
+	background-image url({{{sprite}}})
 
-{{#svg}}{{#selector}}.{{#escape}}{{expression}}{{/escape}}{{^last}},{{/last}}
-{{/selector}}{{#sprite}}	background-position {{position}}{{^common}}
-{{/common}}{{/sprite}}{{^common}}	@extend ${{prefix}}
-	background-image url({{#sprite}}{{{sprite}}}{{/sprite}}{{^sprite}}{{#encode}}"{{{encoded}}}"{{/encode}}{{^encode}}{{{path}}}{{/encode}}{{/sprite}}){{/common}}
-{{#dims}}{{#dimensions}}
+{{/sprite}}{{#shapes}}{{#selector.shape}}{{#escape}}{{expression}}{{/escape}}{{^last}},{{/last}}
+{{/selector.shape}}{{#sprite}}	background-position {{position.relative.xy}}{{^common}}
+	@extend ${{mixin}}{{/common}}{{/sprite}}{{^sprite}}	background-image: url({{{icon}}});{{/sprite}}{{#dimensions.inline}}
+	width {{width.outer}}px
+	height {{height.outer}}px{{/dimensions.inline}}
+{{#dimensions.extra}}
 
-{{#selector}}.{{#escape}}{{expression}}{{/escape}}{{^last}},{{/last}}
-{{/selector}}	width {{width}}px
-	height {{height}}px
-{{/dimensions}}{{/dims}}
+{{#selector.dimensions}}{{#escape}}{{expression}}{{/escape}}{{^last}},{{/last}}
+{{/selector.dimensions}}	width {{width.outer}}px
+	height {{height.outer}}px
+{{/dimensions.extra}}
 
-{{/svg}}
+{{/shapes}}
