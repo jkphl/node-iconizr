@@ -20,7 +20,7 @@
 		<section>
 			<nav>Icon type: {{#nav}}<a href="{{href}}"{{#current}} class="current"{{/current}}>{{label}}</a>{{/nav}}</nav>
 			<ul>
-				{{#icons}}<li title="{{prefix}}-{{name}}"><div class="icon-box"><div class="icon {{prefix}}-{{name}} {{prefix}}-{{name}}-dims"><!-- {{name}} --></div></div><h2>{{prefix}}-{{name}}</h2></li>{{/icons}}
+				{{#icons}}<li title="{{name}}"><div class="icon-box"><i class="icon {{#selector.shape}}{{#last}}{{#classname}}{{raw}}{{/classname}}{{/last}}{{/selector.shape}}" style="width:{{width.outer}}px;height:{{height.outer}}px;"><!-- {{name}} --></i></div><h2>{{name}}</h2></li>{{/icons}}
 			</ul>
 		</section>
 		<footer>
