@@ -10,11 +10,11 @@
 		link				= doc.createElement('link');
 		link.rel			= 'stylesheet';
 		link.type			= 'text/css';
-		link.href			= stylesheets[4] + stylesheets[(dataUri * 1) | ((doc[createElementNS] && doc[createElementNS](w3 + '2000/' + svg, svg).createSVGRect && doc.implementation.hasFeature(w3 + 'TR/SVG11/feature#Image', '1.1')) * 2)];
+		link.href			= stylesheets[4] + stylesheets[(dataUri * 1) | ((doc[createElementNS] && doc[createElementNS](w3 + '2000/' + svg, svg).createSVGRect && doc.implementation.hasFeature(w3 + 'TR/SVG11/feature#Image', '1.1')) * 2)] + '.css';
 		firstStylesheet.parentNode.insertBefore(link, firstStylesheet);
 	},
 	dataUriImage			= new win.Image();
 	dataUriImage.onerror	= function() { insertStylesheet(0); };
 	dataUriImage.onload		= function() { insertStylesheet((dataUriImage.width === 1) && (dataUriImage.height === 1)); };
 	dataUriImage.src		= 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==';
-})('{{png-sprite}}', '{{png-data}}', '{{svg-sprite}}', '{{svg-data}}', '##embed##');
+})('{{png-sprite}}', '{{png-data-uri}}', '{{svg-sprite}}', '{{svg-data-uri}}', '{{{embed}}}');
