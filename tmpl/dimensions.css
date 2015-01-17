@@ -1,7 +1,7 @@
-{{#svg}}{{#dimensions}}{{#selector}}.{{expression}}{{^last}},
-{{/last}}{{/selector}} {
-	width: {{width}}px;
-	height: {{height}}px;
-}{{/dimensions}}
+{{#shapes}}{{#selector.dimensions}}{{expression}}{{^last}},
+{{/last}}{{/selector.dimensions}} {
+	width: {{width.outer}}px;
+	height: {{height.outer}}px;
+}
 
-{{/svg}}
+{{/shapes}}
