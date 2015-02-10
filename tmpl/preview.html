@@ -21,7 +21,7 @@
 		<section>
 			<nav>Icon type: {{#nav}}<a href="{{href}}"{{#current}} class="current"{{/current}}>{{label}}</a>{{/nav}}</nav>
 			<ul>
-				{{#icons}}<li title="{{name}}"><div class="icon-box"><i class="icon {{#selector.shape}}{{#last}}{{#classname}}{{raw}}{{/classname}}{{/last}}{{/selector.shape}} {{#selector.dimensions}}{{#last}}{{#classname}}{{raw}}{{/classname}}{{/last}}{{/selector.dimensions}}"><!-- {{name}} --></i></div><h2>{{name}}</h2></li>{{/icons}}
+				{{#icons}}<li title="{{name}}"><div class="icon-box"><i class="icon {{#selector.shape}}{{#last}}{{#classname}}{{raw}}{{/classname}}{{/last}}{{/selector.shape}}{{#selector.dimensions}} {{#last}}{{#classname}}{{raw}}{{/classname}}{{/last}}{{/selector.dimensions}}"><!-- {{name}} --></i></div><h2>{{name}}</h2></li>{{/icons}}
 			</ul>
 		</section>
 		<footer>
