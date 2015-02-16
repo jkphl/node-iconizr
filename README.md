@@ -1,192 +1,293 @@
-ATTENTION: Not yet based on the latest [svg-sprite](https://github.com/jkphl/svg-sprite) generation!
-====================================================================================================
-This version of *node-iconizr* is still **based on an outdated version of _svg-sprite_**. Links to the *svg-sprite* manual have been adapted. An updated version of *node-iconizr* will be available soon, supporting all the [shiny new features](https://github.com/jkphl/svg-sprite). Thanks for your patience! <3
+node-iconizr [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url]  [![Coverage Status][coveralls-image]][coveralls-url] [![Dependency Status][depstat-image]][depstat-url]
+==========
 
-iconizr
-=======
 <img src="http://iconizr.com/iconizr.png" alt="iconizr" align="right"/>
-> Node.js version
+is a low-level [Node.js](http://nodejs.org/) module that **takes a bunch of [SVG](http://www.w3.org/TR/SVG/) files**, optimizes them and transforms them into a **CSS icon kit** consisting of
 
-*iconizr* is a Node.js module that reads a folder of **SVG images** and creates a **CSS icon kit** out of them, including:
+*	a high-resolution **SVG sprite**,
+*	a fallback **PNG sprite** for ancient clients,
+*	**stylesheet resources** making them CSS sprites,
+*	an intelligent **JavaScript loader** and
+*	an optional set of **HTML preview documents**.
 
-*	cleaned versions of the original **SVG icons** (optional),
-*	a single compact **SVG icon sprite**,
-*	optimized single **PNG icons** (optional),
-*	an optimized combined **PNG icon sprite**,
-*	corresponding **CSS stylesheets** in customizable formats (e.g. CSS, Sass, LESS, Stylus etc.),
-*	an **HTML fragment** including some JavaScript for asynchronously loading the most appropriate stylesheet flavour (depending on the client)
-*	and a couple of **HTML preview documents** (depending on the options you specified) for previewing and testing the different stylesheets (optional).
+As an extension to [svg-sprite](https://github.com/jkphl/svg-sprite), *node-iconizr* basically adds PNG creation and optimization features as well as the logic for picking the icon type that's most appropriate for a specific client. By means of [Mustache](http://mustache.github.io/) templates the stylesheet resources can be created as plain [CSS](http://www.w3.org/Style/CSS/) or one of the major **pre-processor formats** ([Sass](http://sass-lang.com/), [Less](http://lesscss.org/) and [Stylus](http://learnboost.github.io/stylus/)). 
 
-The stylesheets are rendered using [Mustache](http://mustache.github.io) templates, so you can control which output formats are generated (and how they are structured). For each of them, a set of several stylesheets are created, differing in the way the icons are served to clients:
-*	SVG single image icons (optional),
-*	SVG data URIs,
-*	SVG sprite references,
-*	PNG single image icons (optional),
-*	PNG data URIs and
-*	PNG sprite references.
+Grunt, Gulp & Co.
+-----------------
+
+*node-iconizr* supports [Node.js streams](https://github.com/substack/stream-handbook) and thus doesn't take on the part of accessing the file system (i.e. reading the source SVGs from and writing the sprites and CSS files to disk). If you don't want to take care of this yourself, you might rather have a look at the available wrappers for **Grunt** ([grunt-iconizr](https://github.com/jkphl/grunt-iconizr)) and **Gulp** ([gulp-iconizr](https://github.com/jkphl/gulp-iconizr)).
 
 
-Installation & usage
---------------------
+Table of contents
+-----------------
+* [Installation](#installation)
+* [Getting started](#getting-started)
+	* [Usage pattern](#usage-pattern)
+* [Configuration basics](#configuration-basics)
+	* [Options overview](#options-overview)
+* [Command line usage](docs/command-line.md)
+* [Leveraging more svg-sprite features](#leveraging-more-svg-sprite-features)
+* [Background](#background)
+* [Known problems / To-do](#known-problems--to-do)
+* [Changelog](CHANGELOG.md)
+* [Legal](#legal)
 
-To install *iconizr*, run
+
+Installation
+------------
+
+To install *node-iconizr* globally, run
 
 ```bash
-npm install iconizr -g
+npm install node-iconizr -g
 ```
 
 on the command line.
 
-Usage
------
 
-The *iconizr* module exposes only one method, `createIconKit()`. Use it like this:
-
-```javascript
-var Iconizr			    = require('iconizr'),
-var options				= {
-	
-	// svg-sprite inferred options
-	render				: {
-		css				: false,
-		scss			: 'sass/output/directory/',
-		less			: {
-			template	: 'path/to/less/mustache/template.less',
-			dest		: '/absolute/path/to/dest/file'
-		}
-	},
-	// ...
-	
-	// iconizr specific options
-	quantize			: true,
-	level				: 5
-	/* Further configuration options, see below ... */
-},
-callback				= function(err, results) { /*
-	If no error occurs, `results` will be a JSON object like this one:
-	
-	{
-	   success			: true,		// Overall success
-	   length			: 3,		// Total number of files written
-	   files			: {			// Files along with their file size in bytes
-	      '/path/to/your/cwd/css/output/directory/svg/sprite.svg'	: 436823,
-	      '/path/to/your/cwd/css/output/directory/sprite.css'		: 1821,
-	      '/path/to/your/cwd/sass/output/directory/_sprite.scss'	: 2197
-	   },
-	   options          : {         // refined configuration options, see above 
-           // ...
-	   },
-	   data             : {         // Mustache template variables, see below
-	       // ...
-	   }
-	}
-	
-*/};
-Iconizr.createIconKit('path/with/svg/images', 'css/output/directory', options, callback);
-```
-
-The `createIconKit()` method will refuse to run if you don't pass exactly four arguments:
-
-1.	A path to be used as the **input directory** containing the SVG images for sprite creation. A relative path refers to the current working directory.
-2.	A main / default **output directory**, used for creating the stylesheet resources (CSS / Sass / LESS / Stylus etc. if activated and not specified otherwise; see the [svg-sprite rendering options](https://github.com/jkphl/svg-sprite/tree/bbd051e940e7b6373ed56277251a8affb03b1c10#rendering-configuration)) and serving as a base for the sprite subdirectory given by `spritedir` see ([svg-sprite configuration options](https://github.com/jkphl/svg-sprite/tree/bbd051e940e7b6373ed56277251a8affb03b1c10#available-options)). A relative path refers to the current working directory.
-3.	An object with [configuration options](#available-options) (for both [svg-sprite](https://github.com/jkphl/svg-sprite/tree/bbd051e940e7b6373ed56277251a8affb03b1c10#available-options) and [iconizr specific](#available-options)). None of these options is mandatory, so you may pass an empty object `{}` here.
-4.	A callback to be run when the sprite creation has finished (with or without error).
-
-Configuration
--------------
-
-### Options inferred from svg-sprite
-
-*iconizr* is built on top of [svg-sprite](https://github.com/jkphl/svg-sprite/tree/bbd051e940e7b6373ed56277251a8affb03b1c10), which is a Node.js module for SVG sprite generation. All of [svg-sprite's configuration options](https://github.com/jkphl/svg-sprite/tree/bbd051e940e7b6373ed56277251a8affb03b1c10#available-options) apply for *iconizr* as well. For a complete reference please see the [svg-sprite documentation](https://github.com/jkphl/svg-sprite/tree/bbd051e940e7b6373ed56277251a8affb03b1c10).
-
-|Option       |Description  |
-|:------------|:------------|
-|render       |Rendering configuration (output formats like CSS, Sass, LESS, Stylus, HTML with inline SVG, etc.)|
-|variables    |Custom Mustache rendering variables [`{}`]|
-|spritedir    |Sprite subdirectory name [`"svg"`]|
-|sprite       |Sprite file name [`"sprite"`]|
-|prefix       |CSS selector prefix [`"svg"`]|
-|common       |Common CSS selector for all images [*empty*]|
-|maxwidth     |Maximum single image width [`1000`]|
-|maxheight    |Maximum single image height [`1000`]|
-|padding      |Transparent padding around the single images (in pixel) [`0`]|
-|layout       |Image arrangement within the sprite (`"vertical"`, `"horizontal"` or `"diagonal"`) [`"vertical"`]|
-|pseudo       |Character sequence for denoting CSS pseudo classes [`"~"`]|
-|dims         |Render image dimensions as separate CSS rules [`false`]|
-|keep         |Keep intermediate SVG files (inside the sprite subdirectory) [`false`]|
-|recursive    |Recursive scan of the input directory for SVG files [`false`]|
-|verbose      | Output verbose progress information (0-3) [`0`]|
-|cleanwith    |Module to be used for SVG cleaning. Currently "scour" or "svgo" [`"svgo"`]|
-|cleanconfig  |Configuration options for the cleaning module [`{}`]|
-
-In particular, *iconizr*'s [rendering configuration](https://github.com/jkphl/svg-sprite/tree/bbd051e940e7b6373ed56277251a8affb03b1c10#rendering-configuration) and [output format behaviour](https://github.com/jkphl/svg-sprite/tree/bbd051e940e7b6373ed56277251a8affb03b1c10#custom-output-formats) is identical to *svg-sprite*, so please have a look there for further reference.
-
-### Options for iconizr
-
-Property      | Type             | Description     
-------------- | ---------------- | ----------------
-`quantize`    | Boolean          | Whether to quantize PNG images (reduce to 8-bit depth) using `pngquant`. The quantized images are only used if they are smaller in file size than their the originals (and this is not necessarily the case for all PNG files). Quantization may also impact the visual image quality, so please make sure to compare the result to the original images. Defaults to `false`.
-`level`       | Number (0-11)    | This is the optimization level for PNG files. It has to lie between 0 and 11 (inclusive) and defaults to 4, with 0 meaning "no optimization", 1 meaning "fast & rough" and 11 meaning "slow & high quality". Setting this to a high value may result in a very long processing time. Defaults to `3`.
-`embed`       | String           | If given, *iconizr* will use this value as path prefix to embed the stylesheets into your HTML documents (used for the JavaScript loader fragment). By default, the path segment between the current working directory and the main output directory will be used as a root-relative embed path (i.e. giving `path/to/css` as output directory will result in the loader fragment expecting the CSS stylesheets to lie at `/path/to/css/<stylesheet-flavour>.css`). You may specify a period `.` here to make the embed path relative to your HTML document (i.e. `./<stylesheet-flavour>.css`), or use any other relative path (e.g. `../resources` for the embed path `../resources/<stylesheet-flavour>.css`).
-`svg`         | Number           | This is the maximum length a SVG data URI may have. If only one icon exceeds this threshold, all data URIs of this icon set will be changed to external SVG sprite references. Defaults to `1048576` (1MB), minimum is `1024` (1kB).
-`png`		  | Number           | This is the maximum length a PNG data URI may have. If only one icon exceeds this threshold, all data URIs of this icon set will be changed to external PNG sprite references. Defaults to `32768` (32KB = Internet Explorer 8 limit), minimum is `1024` (1kB).
-`preview`     | String           | If given and not empty, a set of preview HTML documents will be rendered that can be used for previewing and testing the icon kit. The given value will be used as directory path relative to the main output directory, whereas the main preview document will be named after your CSS file name (`{render: {css: '...'}}`) or the `prefix` option (in case no CSS files are generated).
-`loader`      | Object           | With this option you get some control about the format and destination of the JavaScript loader fragment: `loader.type` may be `"html"` (for an HTML loader fragment; this is the default) or `"js"` (for a JavaScript file only). The Boolean `loader.minify` controls whether the loader script will get uglyfied (defaults to `TRUE`). Finally, `loader.dest` is the path (relative to the main output directory) where the loader resource will be written to (defaulting to `"."`).  
-
-### Custom output formats & inline SVG embedding
-
-The output rendering of *iconizr* is based on [Mustache](http://mustache.github.io) templates, which enables **full customization of the generated results**. You can even introduce completely new output formats. For details please see the [svg-sprite documentation](https://github.com/jkphl/svg-sprite/tree/bbd051e940e7b6373ed56277251a8affb03b1c10#custom-output-formats).
-
-Also, you may use *iconizr* to create an **inline SVG sprite** that can be embedded directly into your HTML documents. Please see the [svg-sprite documentation](https://github.com/jkphl/svg-sprite/tree/bbd051e940e7b6373ed56277251a8affb03b1c10#inline-embedding) for details.
-
-
-Other versions
---------------
-Besides this Node.js module there are several different versions of *iconizr*:
-
-*	A [Grunt plugin](https://github.com/jkphl/grunt-iconizr) wrapping around this module.
-*	A [PHP command line](https://github.com/jkphl/iconizr) version (that in fact is the "original" one, but compared to the Node.js / Grunt branch it's a little outdated at the moment ...).
-*	The **online service** at [iconizr.com](http://iconizr.com) that's based on the aforementioned PHP version (you can use it for creating CSS icon kits without the need of a local installation).
-*	Finally, [Haithem Bel Haj](https://github.com/haithembelhaj) published a [Grunt plugin](https://github.com/haithembelhaj/grunt-iconizr-php) that's also based on the PHP version. I never tried this one myself, though.
-
-
-Release History
+Getting started
 ---------------
 
-#### v0.2.3
-*	Added concurrent task limit ([#11](https://github.com/jkphl/node-iconizr/pull/11))
-*	Updated dependencies ([#9](https://github.com/jkphl/node-iconizr/issues/9))
-*	Added support for JS-only loader fragment ([#10](https://github.com/jkphl/node-iconizr/issues/10))
+Building an icon kit typically follows these steps:
 
-#### v0.2.2
-*	Added a Stylus output template ([#5](https://github.com/jkphl/node-iconizr/pull/5))
-*	Added the `variables` config option ([*grunt-iconizr* #13](https://github.com/jkphl/grunt-iconizr/issues/13))
-
-#### v0.2.1
-*	Fixed invalid `background-position` style in Sass / LESS templates ([#4](https://github.com/jkphl/node-iconizr/issues/4)) 
-
-#### v0.2.0
-*	Switched to mustache.js for extended function support
-*	Fixed full disabling of output rendering ([#2](https://github.com/jkphl/node-iconizr/issues/2))
-*	Don't crash with empty input directory ([#3](https://github.com/jkphl/node-iconizr/issues/3))
-*	Fixed bug with the SVG sprite not used by the Sass & LESS output types ([grunt-iconizr issue #6](https://github.com/jkphl/grunt-iconizr/issues/6))
-*	Added new HTML output format for rendering an inline SVG HTML implementation ([#1](https://github.com/jkphl/node-iconizr/issues/1))
-*	Added new SVG output format for rendering an inline SVG sprite ([#1](https://github.com/jkphl/node-iconizr/issues/1))
-*	Documentation corrections
-
-#### v0.1.0
-*	Initial release
+1. You [create an Iconizr instance](docs/api.md#iconizr-config-) and pass it a main configuration object.
+2. You [register the SVG source files](docs/api.md#iconizraddfile--name-svg-) that shall be part of your icon kit.
+3. You [trigger the compilation process](docs/api.md#svgspritercompile-config--callback-) and receive the generated files (sprites, CSS, preview documents etc.).
 
 
-Contributors
-------------
-*	[Ralf Hortt](https://github.com/Horttcore)
+### Usage pattern
+
+Using the [standard API](docs/api.md) the creation of an icon kit looks somewhat like this (the necessary `require()` calls have been omitted for clarity's sake):
+
+```javascript
+// Create an iconizr instance (see below for `config` examples)
+var iconizr       = new Iconizr(config);
+
+// Add SVG source files — the manual way ...
+iconizr.add('assets/svg-1.svg', null, fs.readFileSync('assets/svg-1.svg', {encoding: 'utf-8'}));
+iconizr.add('assets/svg-2.svg', null, fs.readFileSync('assets/svg-2.svg', {encoding: 'utf-8'}));
+	/* ... */
+
+// Compile the sprite
+iconizr.compile(function(error, result) {
+	/* ... Write `result` files to disk or do whatever with them ... */
+});
+```
+
+
+Configuration basics
+--------------------
+
+You will surely have noticed the `config` variable passed to the `Iconizr()` constructor in the above example. It carries *node-iconizr*'s **main configuration** — an `Object` with the following properties:
+
+```javascript
+{
+	dest			: <String>,				// Main output directory
+	log  			: <String|Logger>,		// Logging verbosity or custom logger
+	shape			: <Object>,				// SVG shape configuration
+	transform		: <Array>,				// SVG transformations
+	svg				: <Object>,				// Common SVG options
+	variables		: <Object>,				// Custom templating variables
+	
+	icons			: <Object>				// Icons & output related configuration
+}
+```
+
+
+If you are familiar with the underlying [svg-sprite](https://github.com/jkphl/svg-sprite), you will notice that all properties but `icons` are inherited from there. In fact, there are even more *svg-sprite* options that you might [want to leverage](#leveraging-more-svg-sprite-features), but let's stick to the icon related ones first. The **options common between svg-sprite and node-iconizr** are described in great detail in the [svg-sprite configuration documentation](https://github.com/jkphl/svg-sprite/blob/master/docs/configuration.md).
+
+Please refer to the [configuration documentation](docs/configuration.md) to learn more about the **icon specific options**.
+
+
+### Options overview
+
+*node-iconizr* uses default values for everthing, so even if you don't provide a configuration at all, you will still get some resonable results. 
+
+```javascript
+// node-iconizr config options and their default values
+
+var config					= {
+	
+	
+	/* Options inherited from svg-sprite */
+
+	dest					: '.',						// Main output directory
+	log						: null,						// Logging verbosity (default: no logging)
+	shape					: {							// SVG shape related options
+		id					: {							// SVG shape ID related options
+			separator		: '--',						// Separator for directory name traversal
+			generator		: function() { /*...*/ },	// SVG shape ID generator callback
+			pseudo			: '~'						// File name separator for shape states (e.g. ':hover')
+		},
+		dimension			: {							// Dimension related options
+			maxWidth		: 2000,						// Max. shape width
+			maxHeight		: 2000,						// Max. shape height
+			precision		: 2,						// Floating point precision
+			attributes		: false,					// Width and height attributes on embedded shapes
+		},
+		spacing				: {							// Spacing related options
+			padding			: 0,						// Padding around all shapes
+			box				: 'content'					// Padding strategy (similar to CSS `box-sizing`)
+		},
+		meta				: null,						// Path to YAML file with meta / accessibility data
+		align				: null,						// Path to YAML file with extended alignment data
+		dest				: null						// Output directory for optimized intermediate SVG shapes
+	},
+	transform				: ['svgo'],					// List of transformations / optimizations
+	svg						: {							// General options for created SVG files
+		xmlDeclaration		: true,						// Add XML declaration to SVG sprite
+		doctypeDeclaration	: true,						// Add DOCTYPE declaration to SVG sprite
+		namespaceIDs		: true,						// Add namespace token to all IDs in SVG shapes
+		dimensionAttributes	: true						// Width and height attributes on the sprite
+	},
+	variables				: {},						// Custom Mustache templating variables and functions
+	
+	
+	/* Icon related options */
+	
+	icons					: {
+		dest				: '.',						// Main icon output directory
+        layout				: 'packed',					// Sprite layout
+        common				: null,						// Common icon CSS class
+        prefix				: '.icon-%s',				// CSS selector prefix
+        dimensions			: '-dims',					// CSS dimension selector suffix
+        sprite				: 'icons/icons.svg',		// SVG sprite path & name
+        bust				: true,						// Whether to use cache busting
+        render				: {},						// Format configurations for stylesheets
+		fallback			: {							// Fallback related options
+			scale			: 1,						// Zoom factor for PNG fallbacks
+			optimize		: {							// PNG optimization related options
+				level		: 3,						// Optimization level (0-11)
+				quantize	: true,						// Whether to quantize fallback PNGs
+				debug		: false						// Output opimization debug messages
+			}
+		},
+		threshold			: {							// Data URI size limits
+			svg				: 32768,					// SVG data URI size limits
+			fallback		: 32768						// PNG data URI size limits
+		},
+		loader				: {							// JavaScript loader related options
+			type			: 'html',					// Loader format (HTML fragment or JS only)
+			dest			: 'icons-loader.html',		// Loader path and name
+			minify			: true,						// Whether to minify the loader JS
+			embed			: null,						// CSS embed path
+			css				: ''						// CSS stylesheet file name pattern
+		},
+		preview				: false						// Directory for preview documents
+	}
+}
+```
+
+Detailed information about the `icons` property and its members can be found in the [configuration documentation](docs/configuration.md).
+
+
+Command line usage
+------------------
+
+*node-iconizr* comes with a full featured command line version. A typical usage example would look like this:
+
+```bash
+$ node-iconizr --css --css-render-css --css-example --dest=out assets/*.svg
+```
+
+Please refer to the [CLI guide](docs/command-line.md) for further details.
+
+
+Leveraging more svg-sprite features
+------------------------------
+
+As mentioned before, *node-iconizr* is an extension to [svg-sprite](https://github.com/jkphl/svg-sprite), which is a low-level Node.js module for creating SVG sprites, currently supporting five different sprite types (*node-iconizr* uses the «view» type). *svg-sprite* has the `mode` property for [enabling and configuring](https://github.com/jkphl/svg-sprite/blob/master/docs/configuration.md#output-modes) the creation of particular sprites. Also with *node-iconizr* you may specify this property in order to create **additional sprites** along with your icon kit.
+
+```javascript
+var config					= {
+	
+	
+	/* Common svg-sprite & node-iconizr options */
+
+	dest					: '.',
+	log						: null,
+	/* ... */
+	
+	
+	/* node-iconizr specific options */
+	
+	icons					: {
+		/* ... */
+	},
+	
+	
+	/* Options for additional sprites created by svg-sprite */
+	mode					: {
+		/* ... */
+	}
+}
+```
+
+For those of you interested: *node-iconizr* transcribes the relevant parts of the `icons` property to a corresponding `mode` definition which is getting passed to *svg-sprite* internally:
+
+```javascript
+var iconizrConfig			= {
+	icons					: {
+		/* ... Icon options ... */
+	}
+}
+
+// internally becomes
+
+var svgSpriteConfig			= {
+	mode					: {
+		<icons>				: {
+			mode			: 'view',
+			/* ... Icon options ... */
+		}
+	}
+}
+
+```
+
+
+Background
+----------
+
+Although [SVG](http://www.w3.org/TR/SVG/) has been around for quite some time, it just got a lot of traction since responsive websites, mobile data connections and high-resolution ("retina") displays became fairly standard. SVG drawings are losslessly scalable, highly compressible, can be scripted and animated and outperform [bitmap images](http://en.wikipedia.org/wiki/Bitmap) in almost any way you.
+
+While [browser support](http://caniuse.com/#feat=svg) is pretty decent in the meantime, there are still some old clients around that lack support of SVG (e.g. Internet Explorer < 9, Android < 3 and older BlackBerry browsers). To not let these platforms down you may use SVG as your default icon format and additionally serve bitmap versions as **fallbacks**.
+
+Another important thing — especially on cellular networks — is to avoid as many [HTTP requests](http://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol) as possible. Serving images as [data URIs](http://en.wikipedia.org/wiki/Data_URI_scheme) is a well-known strategy for doing so (although a [controversially discussed](http://www.mobify.com/blog/css-sprites-vs-data-uris-which-is-faster-on-mobile/) one as well). *node-iconizr* combines these two techniques — SVG with PNG fallbacks and data URIs — and serves clients in the following order of priorities:
+
+1.	**SVG data URIs** (1 x CSS request, high-resolution SVG)
+2.	**SVG sprite** (1 x CSS + 1 x SVG sprite request, high-resolution SVG)
+3.	**PNG data URIs** (1 x CSS request)
+3.	**PNG sprite** (1 x CSS + 1 x PNG sprite request)
+
+The reason why *node-iconizr* **prefers CSS sprites over single images** (both SVG and PNG) is simple: As soon as only one extra HTTP request has to be made (e.g. because a data URI exceeds the client's limit or the client doesn't support data URIs at all), it is most effective to fetch **all** image data in that one go and skip the data URIs altogether. In this situation CSS sprites help keeping the additional requests down to a minimum, which is exactly one.
+
+
+Known problems / To-do
+----------------------
+
+* SVGO does not minify element IDs when there are `<style>` or `<script>` elements contained in the file
+
+
+Changelog
+---------
+
+Please refer to the [changelog](CHANGELOG.md) for a complete release history.
 
 
 Legal
 -----
-Copyright © 2014 Joschi Kuphal <joschi@kuphal.net> / [@jkphl](https://twitter.com/jkphl)
+Copyright © 2015 Joschi Kuphal <joschi@kuphal.net> / [@jkphl](https://twitter.com/jkphl). *node-iconizr* is licensed under the terms of the [MIT license](LICENSE.txt). The contained example SVG icons are part of the [Tango Icon Library](http://tango.freedesktop.org/Tango_Icon_Library) and belong to the Public Domain.
 
-*iconizr* is licensed under the terms of the [MIT license](LICENSE.txt).
 
-The contained example SVG icons are part of the [Tango Icon Library](http://tango.freedesktop.org/Tango_Icon_Library) and belong to the Public Domain.
+[npm-url]: https://npmjs.org/package/node-iconizr
+[npm-image]: https://badge.fury.io/js/node-iconizr.png
+
+[travis-url]: http://travis-ci.org/jkphl/node-iconizr
+[travis-image]: https://secure.travis-ci.org/jkphl/node-iconizr.png
+
+[coveralls-url]: https://coveralls.io/r/jkphl/node-iconizr
+[coveralls-image]: https://img.shields.io/coveralls/jkphl/node-iconizr.svg
+
+[depstat-url]: https://david-dm.org/jkphl/node-iconizr
+[depstat-image]: https://david-dm.org/jkphl/node-iconizr.svg
