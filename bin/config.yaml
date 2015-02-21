@@ -1,0 +1,170 @@
+icons:
+  dest:
+    description           : Icons main output directory
+    default               : .
+    map                   : icons.dest
+    
+  layout:
+    description           : Sprite layout ("vertical"/"horizontal"/"diagonal"/"packed")
+    default               : packed
+    alias                 : il
+    map                   : icons.layout
+    
+  common:
+    description           : Common CSS rule selector for all icons
+    default               : 
+    map                   : icons.common
+    
+  prefix:
+    description           : CSS selector prefix for all icons (including placeholders)
+    default               : .icon-%s
+    map                   : icons.prefix
+    
+  dimensions:
+    description           : CSS selector suffix for icons dimension rules ("" for inline)
+    default               : -dims
+    map                   : icons.dimensions
+    
+  sprite:
+    description           : Sprite path and filename (relative to --icons-dest)
+    default               : icons/icons.svg
+    alias                 : is
+    map                   : icons.sprite
+    
+  bust:
+    description           : Enable cache busting
+    default               : true
+    map                   : icons.bust
+    
+  render:
+    css:
+      description         : Whether to render a CSS stylesheet
+      default             : false
+      alias               : icss
+      
+      template:
+        description       : CSS stylesheet Mustache template (relative to node-iconizr basedir)
+        default           : tmpl/icons.css
+        map               : icons.render.css.template
+        
+      dest:
+        description       : CSS stylesheet destination (relative to the --icons-dest)
+        default           : icons.css
+        map               : icons.render.css.dest
+        
+    scss:
+      description         : Whether to render a Sass stylesheet (SCSS)
+      default             : false
+      alias               : iscss
+      
+      template:
+        description       : Sass stylesheet Mustache template (relative to node-iconizr basedir)
+        default           : tmpl/icons.scss
+        map               : icons.render.scss.template
+        
+      dest:
+        description       : Sass stylesheet destination (relative to the --icons-dest)
+        default           : sprite.scss
+        map               : icons.render.scss.dest
+        
+    less:
+      description         : Whether to render a LESS stylesheet
+      default             : false
+      alias               : iless
+      
+      template:
+        description       : LESS stylesheet Mustache template (relative to node-iconizr basedir)
+        default           : tmpl/icons.less
+        map               : icons.render.less.template
+        
+      dest:
+        description       : LESS stylesheet destination (relative to the --icons-dest)
+        default           : icons.less
+        map               : icons.render.less.dest
+        
+    styl:
+      description         : Whether to render a Stylus stylesheet
+      default             : false
+      alias               : istyl
+      
+      template:
+        description       : Stylus stylesheet Mustache template (relative to node-iconizr basedir)
+        default           : tmpl/icons.styl
+        map               : icons.render.styl.template
+        
+      dest:
+        description       : styl stylesheet destination (relative to the --iccons-dest)
+        default           : icons.styl
+        map               : icons.render.styl.dest
+        
+    "*":
+      description         : Custom output renderings
+      template:
+        description       : Custom output Mustache template (relative to node-iconizr basedir)
+      
+      dest:
+        description       : Custom output destination (relative to the --icons-dest)
+        
+  fallback:
+    scale:
+      description         : Scale factor (for retina fallback images)
+      default             : 1
+      map                 : icons.fallback.scale
+      
+    optimize:
+      level:
+        description       : Optimization level (0 = no optimization, 11 = max. optimization)
+        default           : 3
+        map               : icons.fallback.optimize.level
+        
+      quantize:
+        description       : Quantize fallback images
+        default           : false
+        map               : icons.fallback.optimize.quantize
+        
+      debug:
+        description       : Optimization debugging output
+        default           : false
+        map               : icons.fallback.optimize.debug
+
+  threshold:
+    svg:
+      description         : Size threshold for SVG dataURIs (bytes)
+      default             : 32768
+      map                 : icons.threshold.svg
+      
+    fallback:
+      description         : Size threshold for fallback dataURIs (bytes)
+      default             : 32768
+      map                 : icons.threshold.fallback
+        
+  loader:
+    type:
+      description         : Loader format ("html"/"js")
+      default             : html
+      map                 : icons.loader.type
+        
+    dest:
+      description         : Loader destination (relative to the --icons-dest)
+      default             : icons-loader.html
+      map                 : icons.loader.dest
+        
+    minify:
+      description         : Whether to minify the loader JavaScript
+      default             : true
+      map                 : icons.loader.minify
+        
+    embed:
+      description         : Path from your embedding HTML resource to the CSS stylesheets
+      default             :
+      map                 : icons.loader.embed
+        
+    css:
+      description         : CSS stylesheet file name pattern
+      default             :
+      map                 : icons.loader.css
+        
+  preview:
+    description           : Directory for HTML preview documents (relative to node-iconizr basedir)
+    default               : ""
+    alias                 : ip
