@@ -1,0 +1,192 @@
+node-iconizr [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url]  [![Coverage Status][coveralls-image]][coveralls-url] [![Dependency Status][depstat-image]][depstat-url]
+==========
+
+This file is part of the documentation of *node-iconizr* — a free low-level Node.js module that **takes a bunch of SVG files**, optimizes them and creates a **CSS icon kit** including SVG and PNG sprites, stylesheet resources and a JavaScript loader. The package is [hosted on GitHub](https://github.com/jkphl/node-iconizr).
+
+
+Command line usage
+------------------
+
+You may use *node-iconizr* as a command line tool. Type `iconizr --help` to get all the available options:
+
+```bash
+Usage: iconizr [options] files
+
+
+Options:
+  --version                           Show version number
+  --help                              Display this help information
+  -D, --dest                          Main output directory (base path)                                        [default: "."]
+  -l, --log                           Logging verbosity ("info", "verbose" or "debug")
+  --shape-id-separator                Separator for traversing a directory structure into a shape ID           [default: "--"]
+  --shape-id-generator                ID generation callback [via CLI only template strings]                   [default: "%s"]
+  --shape-id-pseudo                   Separator for CSS pseudo classes                                         [default: "~"]
+  -w, --shape-dim-width               Maximum shape width in pixels                                            [default: 2000]
+  -h, --shape-dim-height              Maximum shape height in pixels                                           [default: 2000]
+  --shape-dim-precision               Precision (decimal places) for dimension calculations                    [default: 2]
+  --shape-dim-attributes              Whether to add width and height attributes to the shapes                 [default: false]
+  -p, --shape-spacing-padding         Padding around shape (up to 4 x comma-separated)                         [default: "0,0,0,0"]
+  -b, --shape-spacing-box             Box sizing strategy ("content" or "padding")                             [default: "content"]
+  -m, --shape-meta                    Path to YAML file with meta information
+  -a, --shape-align                   Path to YAML file with alignment information
+  --ims, --shape-dest                 Path to output directory for intermediate SVG files
+  --transform                         Comma-separated list of predefined transformers (see docs)               [default: "svgo"]
+  --transform-*                       External JSON config files for named transformers
+  --svg-xmldecl                       Whether to include an XML declaration in SVG files                       [default: true]
+  --svg-doctype                       Whether to include a doctype declaration in SVG files                    [default: true]
+  --svg-namespace-ids                 Whether to apply ID namespacing to the sprite                            [default: true]
+  --svg-dimattrs                      Whether to add width and height attributes to the sprite                 [default: true]
+  -c, --css                           Activates the «css» mode                                                 [default: false]
+  --css-dest                          Mode specific output directory                                           [default: "css"]
+  --cl, --css-layout                  Sprite layout ("vertical"/"horizontal"/"diagonal"/"packed")              [default: "packed"]
+  --css-common                        Common CSS rule selector for all shapes                                  [default: null]
+  --css-prefix                        CSS selector prefix for all shapes (including placeholders)              [default: ".svg-%s"]
+  --css-dimensions                    CSS selector suffix for shape dimension rules ("" for inline)            [default: "-dims"]
+  --cs, --css-sprite                  Sprite path and filename (relative to --mode-css-dest)                   [default: "svg/sprite.css.svg"]
+  --css-bust                          Enable cache busting                                                     [default: true]
+  --ccss, --css-render-css            Whether to render a CSS stylesheet                                       [default: false]
+  --css-render-css-template           CSS stylesheet Mustache template (relative to svg-sprite basedir)        [default: "tmpl/css/sprite.css"]
+  --css-render-css-dest               CSS stylesheet destination (relative to the --mode-css-dest)             [default: "sprite.css"]
+  --cscss, --css-render-scss          Whether to render a Sass stylesheet (SCSS)                               [default: false]
+  --css-render-scss-template          Sass stylesheet Mustache template (relative to svg-sprite basedir)       [default: "tmpl/css/sprite.scss"]
+  --css-render-scss-dest              Sass stylesheet destination (relative to the --mode-css-dest)            [default: "sprite.scss"]
+  --cless, --css-render-less          Whether to render a LESS stylesheet                                      [default: false]
+  --css-render-less-template          LESS stylesheet Mustache template (relative to svg-sprite basedir)       [default: "tmpl/css/sprite.less"]
+  --css-render-less-dest              LESS stylesheet destination (relative to the --mode-css-dest)            [default: "sprite.less"]
+  --cstyl, --css-render-styl          Whether to render a Stylus stylesheet                                    [default: false]
+  --css-render-styl-template          Stylus stylesheet Mustache template (relative to svg-sprite basedir)     [default: "tmpl/css/sprite.styl"]
+  --css-render-styl-dest              styl stylesheet destination (relative to the --mode-css-dest)            [default: "sprite.styl"]
+  --css-render-*                      Custom output renderings
+  --css-render-*-template             Custom output Mustache template (relative to svg-sprite basedir)
+  --css-render-*-dest                 Custom output destination (relative to the --mode-css-dest)
+  --cx, --css-example                 Whether to render an example HTML document                               [default: false]
+  --css-example-template              HTML document Mustache template (relative to svg-sprite basedir)         [default: "tmpl/css/sprite.html"]
+  --css-example-dest                  HTML document destination (relative to the --mode-css-dest)              [default: "sprite.css.html"]
+  -v, --view                          Activates the «view» mode                                                [default: false]
+  --view-dest                         Mode specific output directory                                           [default: "view"]
+  --vl, --view-layout                 Sprite layout ("vertical"/"horizontal"/"diagonal"/"packed")              [default: "packed"]
+  --view-common                       Common CSS rule selector for all shapes                                  [default: null]
+  --view-prefix                       CSS selector prefix for all shapes (including placeholders)              [default: ".svg-%s"]
+  --view-dimensions                   CSS selector suffix for shape dimension rules ("" for inline)            [default: "-dims"]
+  --vs, --view-sprite                 Sprite path and filename (relative to --mode-css-dest)                   [default: "svg/sprite.css.svg"]
+  --view-bust                         Enable cache busting                                                     [default: true]
+  --vcss, --view-render-css           Whether to render a CSS stylesheet                                       [default: false]
+  --view-render-css-template          CSS stylesheet Mustache template (relative to svg-sprite basedir)        [default: "tmpl/css/sprite.css"]
+  --view-render-css-dest              CSS stylesheet destination (relative to the --mode-css-dest)             [default: "sprite.css"]
+  --vscss, --view-render-scss         Whether to render a Sass stylesheet (SCSS)                               [default: false]
+  --view-render-scss-template         Sass stylesheet Mustache template (relative to svg-sprite basedir)       [default: "tmpl/css/sprite.scss"]
+  --view-render-scss-dest             Sass stylesheet destination (relative to the --mode-css-dest)            [default: "sprite.scss"]
+  --vless, --view-render-less         Whether to render a LESS stylesheet                                      [default: false]
+  --view-render-less-template         LESS stylesheet Mustache template (relative to svg-sprite basedir)       [default: "tmpl/css/sprite.less"]
+  --view-render-less-dest             LESS stylesheet destination (relative to the --mode-css-dest)            [default: "sprite.less"]
+  --vstyl, --view-render-styl         Whether to render a Stylus stylesheet                                    [default: false]
+  --view-render-styl-template         Stylus stylesheet Mustache template (relative to svg-sprite basedir)     [default: "tmpl/css/sprite.styl"]
+  --view-render-styl-dest             styl stylesheet destination (relative to the --mode-css-dest)            [default: "sprite.styl"]
+  --view-render-*                     Custom output renderings
+  --view-render-*-template            Custom output Mustache template (relative to svg-sprite basedir)
+  --view-render-*-dest                Custom output destination (relative to the --mode-css-dest)
+  --vx, --view-example                Whether to render an example HTML document                               [default: false]
+  --view-example-template             HTML document Mustache template (relative to svg-sprite basedir)         [default: "tmpl/view/sprite.html"]
+  --view-example-dest                 HTML document destination (relative to the --mode-css-dest)              [default: "sprite.view.html"]
+  -d, --defs                          Activates the «defs» mode                                                [default: false]
+  --defs-dest                         Mode specific output directory                                           [default: "defs"]
+  --defs-prefix                       CSS selector prefix for all shapes (including placeholders)              [default: ".svg-%s"]
+  --defs-dimensions                   CSS selector suffix for shape dimension rules ("" for inline)            [default: "-dims"]
+  --ds, --defs-sprite                 Sprite path and filename (relative to --mode-css-dest)                   [default: "svg/sprite.css.svg"]
+  --defs-bust                         Enable cache busting                                                     [default: false]
+  --di, --defs-inline                 Create sprite variant suitable for inline embedding                      [default: false]
+  --dx, --defs-example                Whether to render an example HTML document                               [default: false]
+  --defs-example-template             HTML document Mustache template (relative to svg-sprite basedir)         [default: "tmpl/defs/sprite.html"]
+  --defs-example-dest                 HTML document destination (relative to the --mode-css-dest)              [default: "sprite.defs.html"]
+  -s, --symbol                        Activates the «symbol» mode                                              [default: false]
+  --symbol-dest                       Mode specific output directory                                           [default: "symbol"]
+  --symbol-prefix                     CSS selector prefix for all shapes (including placeholders)              [default: ".svg-%s"]
+  --symbol-dimensions                 CSS selector suffix for shape dimension rules ("" for inline)            [default: "-dims"]
+  --ss, --symbol-sprite               Sprite path and filename (relative to --mode-css-dest)                   [default: "svg/sprite.css.svg"]
+  --symbol-bust                       Enable cache busting                                                     [default: false]
+  --si, --symbol-inline               Create sprite variant suitable for inline embedding                      [default: false]
+  --sx, --symbol-example              Whether to render an example HTML document                               [default: false]
+  --symbol-example-template           HTML document Mustache template (relative to svg-sprite basedir)         [default: "tmpl/symbol/sprite.html"]
+  --symbol-example-dest               HTML document destination (relative to the --mode-css-dest)              [default: "sprite.symbol.html"]
+  -S, --stack                         Activates the «stack» mode                                               [default: false]
+  --stack-dest                        Mode specific output directory                                           [default: "stack"]
+  --stack-prefix                      CSS selector prefix for all shapes (including placeholders)              [default: ".svg-%s"]
+  --stack-dimensions                  CSS selector suffix for shape dimension rules ("" for inline)            [default: "-dims"]
+  --Ss, --stack-sprite                Sprite path and filename (relative to --mode-css-dest)                   [default: "svg/sprite.css.svg"]
+  --stack-bust                        Enable cache busting                                                     [default: false]
+  --Sx, --stack-example               Whether to render an example HTML document                               [default: false]
+  --stack-example-template            HTML document Mustache template (relative to svg-sprite basedir)         [default: "tmpl/stack/sprite.html"]
+  --stack-example-dest                HTML document destination (relative to the --mode-css-dest)              [default: "sprite.stack.html"]
+  --variables                         Path to external JSON file with Mustache variable definitions
+  --icons-dest                        Icons main output directory                                              [default: "."]
+  --il, --icons-layout                Sprite layout ("vertical"/"horizontal"/"diagonal"/"packed")              [default: "packed"]
+  --icons-common                      Common CSS rule selector for all icons                                   [default: null]
+  --icons-prefix                      CSS selector prefix for all icons (including placeholders)               [default: ".icon-%s"]
+  --icons-dimensions                  CSS selector suffix for icons dimension rules ("" for inline)            [default: "-dims"]
+  --is, --icons-sprite                Sprite path and filename (relative to --icons-dest)                      [default: "icons/icons.svg"]
+  --icons-bust                        Enable cache busting                                                     [default: true]
+  --icss, --icons-render-css          Whether to render a CSS stylesheet                                       [default: false]
+  --icons-render-css-template         CSS stylesheet Mustache template (relative to node-iconizr basedir)      [default: "tmpl/icons.css"]
+  --icons-render-css-dest             CSS stylesheet destination (relative to the --icons-dest)                [default: "icons.css"]
+  --iscss, --icons-render-scss        Whether to render a Sass stylesheet (SCSS)                               [default: false]
+  --icons-render-scss-template        Sass stylesheet Mustache template (relative to node-iconizr basedir)     [default: "tmpl/icons.scss"]
+  --icons-render-scss-dest            Sass stylesheet destination (relative to the --icons-dest)               [default: "icons.scss"]
+  --iless, --icons-render-less        Whether to render a LESS stylesheet                                      [default: false]
+  --icons-render-less-template        LESS stylesheet Mustache template (relative to node-iconizr basedir)     [default: "tmpl/icons.less"]
+  --icons-render-less-dest            LESS stylesheet destination (relative to the --icons-dest)               [default: "icons.less"]
+  --istyl, --icons-render-styl        Whether to render a Stylus stylesheet                                    [default: false]
+  --icons-render-styl-template        Stylus stylesheet Mustache template (relative to node-iconizr basedir)   [default: "tmpl/icons.styl"]
+  --icons-render-styl-dest            styl stylesheet destination (relative to the --iccons-dest)              [default: "icons.styl"]
+  --icons-render-*                    Custom output renderings
+  --icons-render-*-template           Custom output Mustache template (relative to node-iconizr basedir)
+  --icons-render-*-dest               Custom output destination (relative to the --icons-dest)
+  --icons-fallback-scale              Scale factor (for retina fallback images)                                [default: 1]
+  --icons-fallback-optimize-level     Optimization level (0 = no optimization, 11 = max. optimization)         [default: 3]
+  --icons-fallback-optimize-quantize  Quantize fallback images                                                 [default: true]
+  --icons-fallback-optimize-debug     Optimization debugging output                                            [default: false]
+  --icons-threshold-svg               Size threshold for SVG dataURIs (bytes)                                  [default: 32768]
+  --icons-threshold-fallback          Size threshold for fallback dataURIs (bytes)                             [default: 32768]
+  --icons-loader-type                 Loader format ("html"/"js")                                              [default: "html"]
+  --icons-loader-dest                 Loader destination (relative to the --icons-dest)                        [default: "icons-loader.html"]
+  --icons-loader-minify               Whether to minify the loader JavaScript                                  [default: true]
+  --icons-loader-embed                Path from your embedding HTML resource to the CSS stylesheets            [default: null]
+  --icons-loader-css                  CSS stylesheet file name pattern                                         [default: ""]
+  --ip, --icons-preview               Directory for HTML preview documents (relative to node-iconizr basedir)  [default: ""]
+```
+
+### Examples
+
+Both the following commands are doing the same (with the second one using the shorter argument syntax): They use the SVG files found in the directory `"assets"`, create a CSS icon kit of them and write the results to the subdirectory `"out"`  (including a set of HTML preview documents). 
+
+```bash
+$ iconizr --icons-render-css --icons-preview=preview --dest=out assets/*.svg
+$ iconizr -D out --icss --ip preview assets/*.svg
+```
+
+The next one renders a Sass stylesheet (instead of plain CSS) and adds a 10px padding around all shapes:
+
+```bash
+$ iconizr -D out --iscss -p 10 assets/*.svg
+```
+
+### Inlined shape dimensions
+
+To get the shape dimensions inlined into the main shape CSS rules, you need to pass an empty dimension selector suffix. There are two ways of doing so:
+
+```bash
+$ iconizr -D out --icons-dimensions "" --icss assets/*.svg
+$ iconizr -D out --icons-dimensions= --icss assets/*.svg
+```
+
+
+[npm-url]: https://npmjs.org/package/node-iconizr
+[npm-image]: https://badge.fury.io/js/node-iconizr.png
+
+[travis-url]: http://travis-ci.org/jkphl/node-iconizr
+[travis-image]: https://secure.travis-ci.org/jkphl/node-iconizr.png
+
+[coveralls-url]: https://coveralls.io/r/jkphl/node-iconizr
+[coveralls-image]: https://img.shields.io/coveralls/jkphl/node-iconizr.svg
+
+[depstat-url]: https://david-dm.org/jkphl/node-iconizr
+[depstat-image]: https://david-dm.org/jkphl/node-iconizr.svg
