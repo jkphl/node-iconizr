@@ -17,11 +17,10 @@ yargs				= require('yargs')
 					.usage('Create a CSS icon kit of the given SVG files.\nUsage: $0 [options] files')
 					.version(JSON.parse(fs.readFileSync(path.resolve(__dirname, '..', 'package.json'), {encoding: 'utf8'})).version, 'version')
 					.help('help', 'Display this help information')
-					.help('helpall', 'Display extended help information')
 					.wrap(null)
-//					.example('$0 --css --css-render-css --css-example --dest=out assets/*.svg', 'Create a CSS sprite of the given SVG files including example document to the sub directory "out"')
-//					.example('$0 -cD out --ccss --cx assets/*.svg', 'Same as above')
-//					.example('$0 -cD out --cscss -p 10 assets/*.svg', 'Same as above, but render Sass instead of CSS and add 10px padding around all shapes')
+					.example('$0 --icons-render-css --icons-preview=preview --dest=out assets/*.svg', 'Create a CSS icon kit of the given SVG files including preview documents to the subdirectory "out"')
+					.example('$0 -D out --icss --ip preview assets/*.svg', 'Same as above')
+					.example('$0 -D out --iscss -p 10 assets/*.svg', 'Render Sass instead of CSS and add 10px padding around all shapes (no preview documents this time)')
 					.showHelpOnFail(true)
 					.demand(1);
 
@@ -106,9 +105,9 @@ function writeFiles(files) {
 
 // Get document, or throw exception on error
 try {
-	var svgspriteOptions			= yaml.safeLoad(fs.readFileSync(path.resolve(__dirname, path.join('..', 'node_modules', 'svg-sprite', 'bin', 'config.yaml')), 'utf8'));
-	for (var name in svgspriteOptions) {
-		addOption(name, svgspriteOptions[name]);
+	var svgSpriteOptions			= yaml.safeLoad(fs.readFileSync(path.resolve(__dirname, path.join('..', 'node_modules', 'svg-sprite', 'bin', 'config.yaml')), 'utf8'));
+	for (var name in svgSpriteOptions) {
+		addOption(name, svgSpriteOptions[name]);
 	}
 	var options						= yaml.safeLoad(fs.readFileSync(path.resolve(__dirname, 'config.yaml'), 'utf8'));
 	for (var name in options) {
@@ -133,6 +132,7 @@ for (var m in map) {
 config.shape.spacing.padding		= ('' + config.shape.spacing.padding).trim();
 config.shape.spacing.padding		= config.shape.spacing.padding.length ? config.shape.spacing.padding.split(',').map(function(dim) { return parseFloat(dim || 0, 10); }) : [];
 
+// Expand transformation options
 var transform						= ('' + config.transform).trim();
 config.transform					= [];
 (transform.length ? transform.split(',').map(function(trans){ return ('' + trans).trim(); }) : []).forEach(function(transform){
@@ -150,13 +150,14 @@ config.transform					= [];
 	}
 }, config.transform);
 
+// Run through all sprite modes
 ['css', 'view', 'defs', 'symbol', 'stack'].forEach(function(mode){
 	if (!argv[mode]) {
 		delete this[mode];
 		return;
 	} else if (['css', 'view'].indexOf(mode) >= 0) {
 		['css', 'scss', 'less', 'styl'].forEach(function(render){
-			var arg							= 'css-render-' + render;
+			var arg							= mode + '-render-' + render;
 			if (!argv[arg] && (render in this)) {
 				delete this[render];
 			}
@@ -168,12 +169,23 @@ config.transform					= [];
 	}
 }, config.mode);
 
+// Remove excessive example options
 for (var mode in config.mode) {
 	var example						= mode + '-example';
 	if (!argv[example] && ('example' in config.mode[mode])) {
 		delete config.mode[mode].example;
 	}
 }
+
+// Remove excessive render types
+['css', 'scss', 'less', 'styl'].forEach(function(render){
+	var arg							= 'icons-render-' + render;
+	if (!argv[arg] && (render in this)) {
+		delete this[render];
+	}
+}, config.icons.render);
+
+console.log(config);
 
 var iconizr							= new Iconizr(config);
 _.reduce(argv._, function(f, g){ return f.concat(glob.sync(g)); }, []).forEach(function(file){

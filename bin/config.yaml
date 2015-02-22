@@ -168,3 +168,4 @@ icons:
     description           : Directory for HTML preview documents (relative to node-iconizr basedir)
     default               : ""
     alias                 : ip
+    map                   : icons.preview
