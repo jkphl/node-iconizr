@@ -64,7 +64,7 @@ icons:
         
       dest:
         description       : Sass stylesheet destination (relative to the --icons-dest)
-        default           : sprite.scss
+        default           : icons.scss
         map               : icons.render.scss.dest
         
     less:
@@ -119,7 +119,7 @@ icons:
         
       quantize:
         description       : Quantize fallback images
-        default           : false
+        default           : true
         map               : icons.fallback.optimize.quantize
         
       debug:
@@ -161,7 +161,7 @@ icons:
         
     css:
       description         : CSS stylesheet file name pattern
-      default             :
+      default             : ""
       map                 : icons.loader.css
         
   preview:
