@@ -1,4 +1,4 @@
-## 1.0.0 Next generation release
+## master (will become 1.1.0)
 * Rewritten from scratch
 * Based on the lates generation of [svg-sprite](https://github.com/jkphl/svg-sprite)
 
