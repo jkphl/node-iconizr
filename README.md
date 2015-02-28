@@ -24,7 +24,7 @@ Table of contents
 * [Getting started](#getting-started)
 	* [Usage pattern](#usage-pattern)
 * [Configuration basics](#configuration-basics)
-	* [Options overview](#options-overview)
+	* [Properties overview](#properties-overview)
 * [Command line usage](docs/command-line.md)
 * [Leveraging more svg-sprite features](#leveraging-more-svg-sprite-features)
 * [Background](#background)
@@ -78,54 +78,56 @@ iconizr.compile(function(error, result) {
 Configuration basics
 --------------------
 
-You will surely have noticed the `config` variable passed to the `Iconizr()` constructor in the above example. It carries *node-iconizr*'s **main configuration** — an `Object` with the following properties:
+You will surely have noticed the `config` variable passed to the `Iconizr()` constructor in the above example. This is *node-iconizr*'s **main configuration** — an `Object` with the following properties:
 
 ```javascript
 {
+	// Configuration properties shared between svg-sprite and node-iconizr
 	dest			: <String>,				// Main output directory
 	log  			: <String|Logger>,		// Logging verbosity or custom logger
 	shape			: <Object>,				// SVG shape configuration
 	transform		: <Array>,				// SVG transformations
-	svg				: <Object>,				// Common SVG options
+	svg				: <Object>,				// Common SVG properties
 	variables		: <Object>,				// Custom templating variables
 	
+	// Icon specific configuration properties
 	icons			: <Object>				// Icons & output related configuration
 }
 ```
 
 
-If you are familiar with the underlying [svg-sprite](https://github.com/jkphl/svg-sprite), you will notice that all properties but `icons` are inherited from there. In fact, there are even more *svg-sprite* options that you might [want to leverage](#leveraging-more-svg-sprite-features), but let's stick to the icon related ones first. The **options common between svg-sprite and node-iconizr** are described in great detail in the [svg-sprite configuration documentation](https://github.com/jkphl/svg-sprite/blob/master/docs/configuration.md).
+If you are familiar with the underlying [svg-sprite](https://github.com/jkphl/svg-sprite), you may notice that all properties but `icons` are inherited from there. In fact, there are even more *svg-sprite* properties that you [can leverage](#leveraging-more-svg-sprite-features), but let's stick to the icon related ones first. The **properties shared between svg-sprite and node-iconizr** are described in detail in the [svg-sprite configuration documentation](https://github.com/jkphl/svg-sprite/blob/master/docs/configuration.md) — basically all of them apply to *node-iconizr* as well.
 
-Please refer to the [configuration documentation](docs/configuration.md) to learn more about the **icon specific options**.
+In addition, there are some **icon specific properties**. Please refer to the [node-iconizr configuration documentation](docs/configuration.md) to learn more.
 
 
-### Options overview
+### Properties overview
 
 *node-iconizr* uses default values for everthing, so even if you don't provide a configuration at all, you will still get some resonable results. 
 
 ```javascript
-// node-iconizr config options and their default values
+// node-iconizr config properties and their default values
 
 var config					= {
 	
 	
-	/* Options inherited from svg-sprite */
+	/* Properties inherited from svg-sprite */
 
 	dest					: '.',						// Main output directory
 	log						: null,						// Logging verbosity (default: no logging)
-	shape					: {							// SVG shape related options
-		id					: {							// SVG shape ID related options
+	shape					: {							// SVG shape related properties
+		id					: {							// SVG shape ID related properties
 			separator		: '--',						// Separator for directory name traversal
 			generator		: function() { /*...*/ },	// SVG shape ID generator callback
 			pseudo			: '~'						// File name separator for shape states (e.g. ':hover')
 		},
-		dimension			: {							// Dimension related options
+		dimension			: {							// Dimension related properties
 			maxWidth		: 2000,						// Max. shape width
 			maxHeight		: 2000,						// Max. shape height
 			precision		: 2,						// Floating point precision
 			attributes		: false,					// Width and height attributes on embedded shapes
 		},
-		spacing				: {							// Spacing related options
+		spacing				: {							// Spacing related properties
 			padding			: 0,						// Padding around all shapes
 			box				: 'content'					// Padding strategy (similar to CSS `box-sizing`)
 		},
@@ -134,7 +136,7 @@ var config					= {
 		dest				: null						// Output directory for optimized intermediate SVG shapes
 	},
 	transform				: ['svgo'],					// List of transformations / optimizations
-	svg						: {							// General options for created SVG files
+	svg						: {							// General properties for created SVG files
 		xmlDeclaration		: true,						// Add XML declaration to SVG sprite
 		doctypeDeclaration	: true,						// Add DOCTYPE declaration to SVG sprite
 		namespaceIDs		: true,						// Add namespace token to all IDs in SVG shapes
@@ -143,7 +145,7 @@ var config					= {
 	variables				: {},						// Custom Mustache templating variables and functions
 	
 	
-	/* Icon related options */
+	/* Icon related properties */
 	
 	icons					: {
 		dest				: '.',						// Main icon output directory
@@ -154,9 +156,9 @@ var config					= {
         sprite				: 'icons/icons.svg',		// SVG sprite path & name
         bust				: true,						// Whether to use cache busting
         render				: {},						// Format configurations for stylesheets
-		fallback			: {							// Fallback related options
+		fallback			: {							// Fallback related properties
 			scale			: 1,						// Zoom factor for PNG fallbacks
-			optimize		: {							// PNG optimization related options
+			optimize		: {							// PNG optimization related properties
 				level		: 3,						// Optimization level (0-11)
 				quantize	: true,						// Whether to quantize fallback PNGs
 				debug		: false						// Output opimization debug messages
@@ -166,7 +168,7 @@ var config					= {
 			svg				: 32768,					// SVG data URI size limits
 			fallback		: 32768						// PNG data URI size limits
 		},
-		loader				: {							// JavaScript loader related options
+		loader				: {							// JavaScript loader related properties
 			type			: 'html',					// Loader format (HTML fragment or JS only)
 			dest			: 'icons-loader.html',		// Loader path and name
 			minify			: true,						// Whether to minify the loader JS
@@ -202,21 +204,21 @@ As mentioned before, *node-iconizr* is an extension to [svg-sprite](https://gith
 var config					= {
 	
 	
-	/* Common svg-sprite & node-iconizr options */
+	/* Common svg-sprite & node-iconizr properties */
 
 	dest					: '.',
 	log						: null,
 	/* ... */
 	
 	
-	/* node-iconizr specific options */
+	/* node-iconizr specific properties */
 	
 	icons					: {
 		/* ... */
 	},
 	
 	
-	/* Options for additional sprites created by svg-sprite */
+	/* Properties for additional sprites created by svg-sprite */
 	mode					: {
 		/* ... */
 	}
@@ -228,7 +230,7 @@ For those of you interested: *node-iconizr* transcribes the relevant parts of th
 ```javascript
 var iconizrConfig			= {
 	icons					: {
-		/* ... Icon options ... */
+		/* ... Icon properties ... */
 	}
 }
 
@@ -238,7 +240,7 @@ var svgSpriteConfig			= {
 	mode					: {
 		<icons>				: {
 			mode			: 'view',
-			/* ... Icon options ... */
+			/* ... Icon properties ... */
 		}
 	}
 }
