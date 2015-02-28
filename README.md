@@ -82,7 +82,7 @@ You will surely have noticed the `config` variable passed to the `Iconizr()` con
 
 ```javascript
 {
-	// Configuration properties shared between svg-sprite and node-iconizr
+	// Configuration properties common between svg-sprite and node-iconizr
 	dest			: <String>,				// Main output directory
 	log  			: <String|Logger>,		// Logging verbosity or custom logger
 	shape			: <Object>,				// SVG shape configuration
@@ -110,9 +110,7 @@ In addition, there are some **icon specific properties**. Please refer to the [n
 
 var config					= {
 	
-	
-	/* Properties inherited from svg-sprite */
-
+	// Properties inherited from svg-sprite
 	dest					: '.',						// Main output directory
 	log						: null,						// Logging verbosity (default: no logging)
 	shape					: {							// SVG shape related properties
@@ -144,9 +142,7 @@ var config					= {
 	},
 	variables				: {},						// Custom Mustache templating variables and functions
 	
-	
-	/* Icon related properties */
-	
+	// Icon related properties
 	icons					: {
 		dest				: '.',						// Main icon output directory
         layout				: 'packed',					// Sprite layout
