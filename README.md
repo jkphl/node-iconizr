@@ -44,7 +44,7 @@ The *iconizr* module exposes only one method, `createIconKit()`. Use it like thi
 
 ```javascript
 var Iconizr			    = require('iconizr'),
-var options				= {
+options				    = {
 	
 	// svg-sprite inferred options
 	render				: {
