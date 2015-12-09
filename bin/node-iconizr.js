@@ -3,17 +3,17 @@
 /**
  * Module dependencies.
  */
-var _				= require('lodash'),
-path				= require('path'),
-fs					= require('fs'),
-mkdirp				= require('mkdirp'),
-File				= require('vinyl'),
-yaml				= require('js-yaml'),
-glob				= require('glob'),
-Iconizr				= require('../lib/iconizr'),
-config				= {},
-map					= {},
-yargs				= require('yargs')
+var _				= require('lodash');
+var path			= require('path');
+var fs				= require('fs');
+var mkdirp			= require('mkdirp');
+var File			= require('vinyl');
+var yaml			= require('js-yaml');
+var glob			= require('glob');
+var Iconizr			= require('../lib/iconizr');
+var config			= {};
+var map				= {};
+var yargs			= require('yargs')
 					.usage('Create a CSS icon kit of the given SVG files.\nUsage: $0 [options] files')
 					.version(JSON.parse(fs.readFileSync(path.resolve(__dirname, '..', 'package.json'), {encoding: 'utf8'})).version, 'version')
 					.help('help', 'Display this help information')
@@ -67,7 +67,7 @@ function addOption(name, option) {
  * 
  * @param {Object} store			Configuration
  * @param {Array} path				Path
- * @param {Mixed} value				Value				
+ * @param {Object|Array|String|Number|Boolean} value Value
  */
 function addConfigMap(store, path, value) {
 	var key					= path.shift();
@@ -110,7 +110,7 @@ try {
 		addOption(name, svgSpriteOptions[name]);
 	}
 	var options						= yaml.safeLoad(fs.readFileSync(path.resolve(__dirname, 'config.yaml'), 'utf8'));
-	for (var name in options) {
+	for (name in options) {
 		addOption(name, options[name]);
 	}
 	
@@ -143,7 +143,7 @@ config.transform					= [];
 				transformConfigJSON			= fs.readFileSync(path.resolve(transformConfigFile), {encoding: 'utf8'});
 				transformConfig				= transformConfigJSON.trim() ? JSON.parse(transformConfigJSON) : {};
 				this.push(_.object([transform], [transformConfig]));
-			} catch(e) {};
+			} catch(e) {}
 		} else {
 			this.push(transform);
 		}
@@ -197,7 +197,7 @@ _.reduce(argv._, function(f, g){ return f.concat(glob.sync(g)); }, []).forEach(f
 	iconizr.add(file, path.basename(file), fs.readFileSync(file));
 });
 
-iconizr.compile(function(error, result, data) {
+iconizr.compile(function(error, result /*, data*/) {
 	if (error) {
 		console.error(error);
 	} else {
