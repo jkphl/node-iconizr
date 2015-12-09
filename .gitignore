@@ -1,9 +1,9 @@
-*.md.html
 **/*.md.html
 /.buildpath
+/.idea
 /.project
 /.settings
-/node_modules
+/node_modules/*
 /npm-debug.log
 /coverage
 /tmp

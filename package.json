@@ -1,6 +1,6 @@
 {
 	"name": "iconizr",
-	"version": "1.1.0",
+	"version": "1.1.1",
 	"author": {
 		"name": "Joschi Kuphal",
 		"email": "joschi@kuphal.net",
@@ -34,22 +34,22 @@
 		"flowchart": "./node_modules/mermaid/bin/mermaid.js -o ./test/fixture/flowchart ./test/fixture/flowchart/logic"
 	},
 	"dependencies": {
-		"mkdirp": "^0.5.0",
-		"async": "^0.9.0",
-		"lodash": "lodash/lodash",
-		"vinyl": "^0.4.6",
-		"phantomjs": "^1.9.12",
-		"mustache": "^1.0.0",
-		"svg-sprite": "^1.0.7",
-		"winston": "^0.8.3",
-	    "pngcrush-bin": "^2.2.0",
-	    "pngquant-bin": "^2.0.3",
-	    "optipng-bin": "^2.0.4",
-	    "temp": "^0.8.1",
-	    "js-yaml": "^3.2.6",
-		"yargs": "^3.2.1",
+		"mkdirp": "^0.5.1",
+		"async": "^1.5.0",
+		"lodash": "^3.10.1",
+		"vinyl": "^1.1.0",
+		"phantomjs": "^1.9.19",
+		"mustache": "^2.2.0",
+		"svg-sprite": "^1.2.16",
+		"winston": "^2.1.1",
+	    "pngcrush-bin": "^3.0.0",
+	    "pngquant-bin": "^3.0.0",
+	    "optipng-bin": "^3.0.3",
+	    "temp": "^0.8.3",
+	    "js-yaml": "^3.4.6",
+		"yargs": "^3.31.0",
 		"prettysize": "^0.0.3",
-		"uglify-js": "^2.4.16"
+		"uglify-js": "^2.6.1"
 	},
 	"devDependencies": {
 		"mocha": "",
@@ -58,8 +58,8 @@
 		"istanbul": "*",
 		"should": "",
 		"rimraf": "",
-		"glob": "^4.3.1",
-		"mermaid": "^0.3.0"
+		"glob": "^6.0.1",
+		"mermaid": "^0.5.6"
 	},
 	"keywords": [
 		"icon",
