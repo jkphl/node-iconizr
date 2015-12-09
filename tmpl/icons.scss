@@ -1,16 +1,33 @@
-{{#sprite}}{{#hasCommon}}.{{/hasCommon}}{{^hasCommon}}%{{/hasCommon}}{{mixin}} {
+{{#sprite}}{{#hasMixin}}@mixin {{mixinName}} {
 	background: url({{{sprite}}}) no-repeat;
 }
 
-{{/sprite}}{{^sprite}}{{#hasCommon}}.{{mixin}} {
+{{#hasCommon}}.{{commonName}} {
+	@include {{mixinName}};
+}
+
+{{/hasCommon}}{{/hasMixin}}{{^hasMixin}}{{#hasCommon}}.{{/hasCommon}}{{^hasCommon}}%{{/hasCommon}}{{commonName}} {
+	background: url({{{sprite}}}) no-repeat;
+}
+
+{{/hasMixin}}{{/sprite}}{{^sprite}}{{#hasMixin}}@mixin {{mixinName}} {
 	background-repeat: no-repeat;
 }
 
-{{/hasCommon}}{{/sprite}}{{#shapes}}{{#selector.shape}}{{expression}}{{^last}},
+{{#hasCommon}}.{{commonName}} {
+	@include {{mixinName}};
+}
+
+{{/hasCommon}}{{/hasMixin}}{{^hasMixin}}{{#hasCommon}}.{{commonName}} {
+	background-repeat: no-repeat;
+}
+
+{{/hasCommon}}{{/hasMixin}}{{/sprite}}{{#shapes}}{{#selector.shape}}{{expression}}{{^last}},
 {{/last}}{{/selector.shape}} { {{#sprite}}{{^hasCommon}}
-	@extend %{{mixin}};{{/hasCommon}}
+	{{#hasMixin}}@include {{mixinName}};{{/hasMixin}}{{^hasMixin}}@extend %{{commonName}};{{/hasMixin}}{{/hasCommon}}
 	background-position: {{position.relative.xy}};{{/sprite}}{{^sprite}}
-	{{#hasCommon}}background-image: url({{{icon}}});{{/hasCommon}}{{^hasCommon}}background: url({{{icon}}}) no-repeat;{{/hasCommon}}{{/sprite}}{{#dimensions.inline}}
+	{{#hasCommon}}background-image: url({{{icon}}});{{/hasCommon}}{{^hasCommon}}{{#hasMixin}}@include {{mixinName}};
+	background-image: url({{{icon}}});{{/hasMixin}}{{^hasMixin}}background: url({{{icon}}}) no-repeat;{{/hasMixin}}{{/hasCommon}}{{/sprite}}{{#dimensions.inline}}
 	width: {{width.outer}}px;
 	height: {{height.outer}}px;{{/dimensions.inline}}
 }{{#dimensions.extra}}
